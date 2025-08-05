@@ -1,0 +1,6 @@
+/uploads/
+/upgrade/
+/cache/
+/plugins/**/vendor/
+/themes/**/node_modules/
+*.log
