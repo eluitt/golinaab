@@ -4,35 +4,62 @@
     {
       "label": "Feature: Start",
       "type": "shell",
-      "command": "bash",
-      "args": ["scripts/steps.sh", "feature:start", "${input:featureName}"],
-      "options": { "cwd": "E:/laragon/www/golinaab/wp-content" }
+      "command": "scripts/steps.sh",
+      "args": ["feature:start", "${input:featureName}"],
+      "options": {
+        "cwd": "${workspaceFolder:wp}",
+        "shell": {
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": ["-lc"]
+        }
+      },
+      "problemMatcher": []
     },
     {
       "label": "Feature: Commit",
       "type": "shell",
-      "command": "bash",
-      "args": ["scripts/steps.sh", "feature:commit", "${input:commitMsg}"],
-      "options": { "cwd": "E:/laragon/www/golinaab/wp-content" }
+      "command": "scripts/steps.sh",
+      "args": ["feature:commit", "${input:commitMsg}"],
+      "options": {
+        "cwd": "${workspaceFolder:wp}",
+        "shell": {
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": ["-lc"]
+        }
+      },
+      "problemMatcher": []
     },
     {
       "label": "Step: Tag (auto)",
       "type": "shell",
-      "command": "bash",
-      "args": ["scripts/steps.sh", "step:tag", "${input:stepSlug}"],
-      "options": { "cwd": "E:/laragon/www/golinaab/wp-content" }
+      "command": "scripts/steps.sh",
+      "args": ["step:tag", "${input:stepSlug}"],
+      "options": {
+        "cwd": "${workspaceFolder:wp}",
+        "shell": {
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": ["-lc"]
+        }
+      },
+      "problemMatcher": []
     },
     {
       "label": "Snapshot backup (follow golitheme)",
       "type": "shell",
-      "command": "bash",
-      "args": ["scripts/snapshot.sh"],
-      "options": { "cwd": "E:/laragon/www/golinaab" }
+      "command": "scripts/snapshot.sh",
+      "options": {
+        "cwd": "${workspaceFolder:root}",
+        "shell": {
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": ["-lc"]
+        }
+      },
+      "problemMatcher": []
     }
   ],
   "inputs": [
-    { "id": "featureName", "type": "promptString", "description": "Feature slug (e.g., header-search)", "default": "header-search" },
-    { "id": "commitMsg",   "type": "promptString", "description": "Conventional commit message", "default": "feat(theme): ..." },
-    { "id": "stepSlug",    "type": "promptString", "description": "Step slug (e.g., step-01-header)", "default": "header" }
+    { "id": "featureName", "type": "promptString", "description": "Feature slug", "default": "header" },
+    { "id": "commitMsg",   "type": "promptString", "description": "Commit message", "default": "feat(theme): ..." },
+    { "id": "stepSlug",    "type": "promptString", "description": "Step slug", "default": "header" }
   ]
 }

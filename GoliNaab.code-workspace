@@ -1,12 +1,15 @@
 {
-    "folders": [
-      { "path": "E:/laragon/www/golinaab/wp-content" },   // ریپو golitheme (wp-content)
-      { "path": "E:/laragon/www/golinaab" }               // ریپو golinaab (ریشه سایت + submodule)
-    ],
-    "settings": {
-      "files.eol": "\n",
-      "git.enableSmartCommit": true,
-      "git.confirmSync": false
+  "folders": [
+    { "name": "wp",   "path": "E:/laragon/www/golinaab/wp-content" },
+    { "name": "root", "path": "E:/laragon/www/golinaab" }
+  ],
+  "settings": {
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.profiles.windows": {
+      "Git Bash": {
+        "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+        "args": ["--login", "-i"]
+      }
     }
   }
-  
+}
