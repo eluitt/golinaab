@@ -1,0 +1,12 @@
+{
+    "folders": [
+      { "path": "E:/laragon/www/golinaab/wp-content" },   // ریپو golitheme (wp-content)
+      { "path": "E:/laragon/www/golinaab" }               // ریپو golinaab (ریشه سایت + submodule)
+    ],
+    "settings": {
+      "files.eol": "\n",
+      "git.enableSmartCommit": true,
+      "git.confirmSync": false
+    }
+  }
+  
