@@ -1,39 +1,38 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "Feature: Start",
-        "type": "shell",
-        "command": "bash",
-        "args": ["scripts/steps.sh", "feature:start", "${input:featureName}"],
-        "options": { "cwd": "E:/laragon/www/golinaab/wp-content" }
-      },
-      {
-        "label": "Feature: Commit",
-        "type": "shell",
-        "command": "bash",
-        "args": ["scripts/steps.sh", "feature:commit", "${input:commitMsg}"],
-        "options": { "cwd": "E:/laragon/www/golinaab/wp-content" }
-      },
-      {
-        "label": "Step: Tag (auto)",
-        "type": "shell",
-        "command": "bash",
-        "args": ["scripts/steps.sh", "step:tag", "${input:stepSlug}"],
-        "options": { "cwd": "E:/laragon/www/golinaab/wp-content" }
-      },
-      {
-        "label": "Snapshot backup (follow golitheme)",
-        "type": "shell",
-        "command": "bash",
-        "args": ["scripts/snapshot.sh"],
-        "options": { "cwd": "E:/laragon/www/golinaab" }
-      }
-    ],
-    "inputs": [
-      { "id": "featureName", "type": "promptString", "description": "Feature slug (e.g., header-search)", "default": "header-search" },
-      { "id": "commitMsg",   "type": "promptString", "description": "Conventional commit message", "default": "feat(theme): ..." },
-      { "id": "stepSlug",    "type": "promptString", "description": "Step slug (e.g., step-01-header)", "default": "header" }
-    ]
-  }
-  
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Feature: Start",
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/steps.sh", "feature:start", "${input:featureName}"],
+      "options": { "cwd": "E:/laragon/www/golinaab/wp-content" }
+    },
+    {
+      "label": "Feature: Commit",
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/steps.sh", "feature:commit", "${input:commitMsg}"],
+      "options": { "cwd": "E:/laragon/www/golinaab/wp-content" }
+    },
+    {
+      "label": "Step: Tag (auto)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/steps.sh", "step:tag", "${input:stepSlug}"],
+      "options": { "cwd": "E:/laragon/www/golinaab/wp-content" }
+    },
+    {
+      "label": "Snapshot backup (follow golitheme)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/snapshot.sh"],
+      "options": { "cwd": "E:/laragon/www/golinaab" }
+    }
+  ],
+  "inputs": [
+    { "id": "featureName", "type": "promptString", "description": "Feature slug (e.g., header-search)", "default": "header-search" },
+    { "id": "commitMsg",   "type": "promptString", "description": "Conventional commit message", "default": "feat(theme): ..." },
+    { "id": "stepSlug",    "type": "promptString", "description": "Step slug (e.g., step-01-header)", "default": "header" }
+  ]
+}

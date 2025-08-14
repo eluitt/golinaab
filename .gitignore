@@ -1,13 +1,48 @@
+# --- WordPress core (don't track) ---
+/wp-admin/
+/wp-includes/
+/index.php
+/wp-*.php
+/xmlrpc.php
+/readme.html
+/license.txt
+
+# --- wp-content runtime (don't track) ---
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/upgrade/
+/wp-content/languages/
+
+# --- plugins: ignore all by default ---
+/wp-content/plugins/*
+# allow custom plugins (rename to your slugs)
+!/wp-content/plugins/golinaab-*/**
+!/wp-content/mu-plugins/**
+
+# --- themes: ignore all by default ---
+/wp-content/themes/*
+# allow your custom theme
+!/wp-content/themes/golitheme/**
+
+# --- dependencies ---
+**/node_modules/
+# فقط vendor ریشه را نادیده بگیر؛ vendor داخل پلاگین/قالب را نه
+/vendor/
+!wp-content/plugins/**/vendor/**
+!wp-content/themes/**/vendor/**
+
+# --- configs & secrets ---
+wp-config.php
+wp-config-local.php
+.env
+.env.*
+.htaccess
+
+# --- misc ---
 *.log
-node_modules/
-vendor/
 .DS_Store
 Thumbs.db
 *.zip
 *.tar
 *.tar.gz
 *.7z
-wp-config.php
-.DS_Store
-thumbs.db
-*.log
