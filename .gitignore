@@ -1,44 +1,23 @@
-# --- WordPress core (don't track) ---
-/wp-admin/
-/wp-includes/
+# --- WordPress core (do not track)
+#/ index.php + core php in root
 /index.php
 /wp-*.php
 /xmlrpc.php
 /readme.html
 /license.txt
+/wp-admin/
+wp-admin/
+/wp-includes/
+wp-includes/
 
-# --- wp-content runtime (don't track) ---
-/wp-content/uploads/
-/wp-content/cache/
-/wp-content/upgrade/
-/wp-content/languages/
+# --- Root-level configs & secrets (do not track)
+/wp-config.php
+/wp-config-local.php
+/.env
+/.env.*
+/.htaccess
 
-# --- plugins: ignore all by default ---
-/wp-content/plugins/*
-# allow custom plugins (rename to your slugs)
-!/wp-content/plugins/golinaab-*/**
-!/wp-content/mu-plugins/**
-
-# --- themes: ignore all by default ---
-/wp-content/themes/*
-# allow your custom theme
-!/wp-content/themes/golitheme/**
-
-# --- dependencies ---
-**/node_modules/
-# فقط vendor ریشه را نادیده بگیر؛ vendor داخل پلاگین/قالب را نه
-/vendor/
-!wp-content/plugins/**/vendor/**
-!wp-content/themes/**/vendor/**
-
-# --- configs & secrets ---
-wp-config.php
-wp-config-local.php
-.env
-.env.*
-.htaccess
-
-# --- misc ---
+# --- Editor junk & archives
 *.log
 .DS_Store
 Thumbs.db
@@ -46,3 +25,9 @@ Thumbs.db
 *.tar
 *.tar.gz
 *.7z
+.idea/
+.vscode/
+
+# --- If wp-content is a GIT SUBMODULE, you don't need inner rules.
+# Only track the submodule pointer; contents are managed in that repo.
+# (No need to ignore /wp-content/* paths here.)

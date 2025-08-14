@@ -1,65 +1,96 @@
 {
   "version": "2.0.0",
   "tasks": [
+    /* --- WP (wp-content repo) --- */
     {
       "label": "Feature: Start",
       "type": "shell",
-      "command": "scripts/steps.sh",
-      "args": ["feature:start", "${input:featureName}"],
+      "command": "GN_DEV_BRANCH=${input:devBranch} bash scripts/steps.sh feature:start ${input:featureSlug}",
       "options": {
         "cwd": "${workspaceFolder:wp}",
-        "shell": {
-          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-lc"]
-        }
+        "shell": { "executable": "C:\\Program Files\\Git\\bin\\bash.exe", "args": ["-lc"] }
       },
       "problemMatcher": []
     },
     {
       "label": "Feature: Commit",
       "type": "shell",
-      "command": "scripts/steps.sh",
-      "args": ["feature:commit", "${input:commitMsg}"],
+      "command": "bash scripts/steps.sh feature:commit ${input:commitMsg}",
       "options": {
         "cwd": "${workspaceFolder:wp}",
-        "shell": {
-          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-lc"]
-        }
+        "shell": { "executable": "C:\\Program Files\\Git\\bin\\bash.exe", "args": ["-lc"] }
       },
       "problemMatcher": []
     },
     {
       "label": "Step: Tag (auto)",
       "type": "shell",
-      "command": "scripts/steps.sh",
-      "args": ["step:tag", "${input:stepSlug}"],
+      "command": "bash scripts/steps.sh step:tag ${input:stepSlug}",
       "options": {
         "cwd": "${workspaceFolder:wp}",
-        "shell": {
-          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-lc"]
-        }
+        "shell": { "executable": "C:\\Program Files\\Git\\bin\\bash.exe", "args": ["-lc"] }
       },
       "problemMatcher": []
     },
     {
-      "label": "Snapshot backup (follow golitheme)",
+      "label": "Feature: Push",
+      "type": "shell",
+      "command": "bash scripts/steps.sh feature:push",
+      "options": {
+        "cwd": "${workspaceFolder:wp}",
+        "shell": { "executable": "C:\\Program Files\\Git\\bin\\bash.exe", "args": ["-lc"] }
+      },
+      "problemMatcher": []
+    },
+
+    /* --- Theme build tasks --- */
+    {
+      "label": "Theme: Build (prod)",
+      "type": "shell",
+      "command": "npm run build",
+      "options": {
+        "cwd": "${workspaceFolder:wp}/themes/golitheme",
+        "shell": { "executable": "C:\\Program Files\\Git\\bin\\bash.exe", "args": ["-lc"] }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Theme: Dev (watch)",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": {
+        "cwd": "${workspaceFolder:wp}/themes/golitheme",
+        "shell": { "executable": "C:\\Program Files\\Git\\bin\\bash.exe", "args": ["-lc"] }
+      },
+      "problemMatcher": []
+    },
+
+    /* --- ROOT (site repo) --- */
+    {
+      "label": "ROOT: Submodule bump & commit",
+      "type": "shell",
+      "command": "git add wp-content && git commit -m \"chore(submodule): bump wp-content to ${input:stepSlug}\" || echo \"No changes\" && git push",
+      "options": {
+        "cwd": "${workspaceFolder:root}",
+        "shell": { "executable": "C:\\Program Files\\Git\\bin\\bash.exe", "args": ["-lc"] }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ROOT: Snapshot backup",
       "type": "shell",
       "command": "scripts/snapshot.sh",
       "options": {
         "cwd": "${workspaceFolder:root}",
-        "shell": {
-          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-lc"]
-        }
+        "shell": { "executable": "C:\\Program Files\\Git\\bin\\bash.exe", "args": ["-lc"] }
       },
       "problemMatcher": []
     }
   ],
   "inputs": [
-    { "id": "featureName", "type": "promptString", "description": "Feature slug", "default": "header" },
-    { "id": "commitMsg",   "type": "promptString", "description": "Commit message", "default": "feat(theme): ..." },
-    { "id": "stepSlug",    "type": "promptString", "description": "Step slug", "default": "header" }
+    { "id": "devBranch",   "type": "promptString", "description": "Develop branch name", "default": "golitheme" },
+    { "id": "featureSlug", "type": "promptString", "description": "Feature slug (e.g. header, hero, cards)", "default": "hero" },
+    { "id": "commitMsg",   "type": "promptString", "description": "Commit message", "default": "feat(hero): full-bleed 100svh hero with soft parallax and CTA" },
+    { "id": "stepSlug",    "type": "promptString", "description": "Step slug for tag/submodule message", "default": "hero" }
   ]
 }

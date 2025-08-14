@@ -1,1 +1,17 @@
+# normalize line endings
 * text=auto eol=lf
+
+# keep binaries untouched
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.zip binary
+
+# force LF for shell scripts
+*.sh text eol=lf
