@@ -1,0 +1,4 @@
+[submodule "wp-content"]
+	path = wp-content
+	url = git@github.com:eluitt/golitheme.git
+	branch = main
