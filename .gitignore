@@ -1,0 +1,13 @@
+*.log
+node_modules/
+vendor/
+.DS_Store
+Thumbs.db
+*.zip
+*.tar
+*.tar.gz
+*.7z
+wp-config.php
+.DS_Store
+thumbs.db
+*.log
