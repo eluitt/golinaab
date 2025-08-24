@@ -89,8 +89,8 @@
   ],
   "inputs": [
     { "id": "devBranch",   "type": "promptString", "description": "Develop branch name", "default": "golitheme" },
-    { "id": "featureSlug", "type": "promptString", "description": "Feature slug (e.g. header, hero, cards)", "default": "hero" },
-    { "id": "commitMsg",   "type": "promptString", "description": "Commit message", "default": "feat(hero): full-bleed 100svh hero with soft parallax and CTA" },
-    { "id": "stepSlug",    "type": "promptString", "description": "Step slug for tag/submodule message", "default": "hero" }
+    { "id": "featureSlug", "type": "promptString", "description": "Feature slug (e.g. header, hero, cards)", "default": "00-tooling" },
+    { "id": "commitMsg",   "type": "promptString", "description": "Commit message", "default": "feat(tooling): step-00 skeleton + pipeline + theme.json + ACF JSON" },
+    { "id": "stepSlug",    "type": "promptString", "description": "Step slug for tag/submodule message", "default": "00-tooling" }
   ]
 }
