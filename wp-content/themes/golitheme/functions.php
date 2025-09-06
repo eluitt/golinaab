@@ -71,6 +71,23 @@ function gn_enqueue_assets() {
         true
     );
     
+    // Header functionality script (conditional)
+    if (is_front_page() || is_home() || is_page()) {
+        wp_enqueue_script(
+            'gn-header-script',
+            GN_THEME_URL . '/assets/scripts/header.js',
+            array(),
+            GN_THEME_VERSION,
+            true
+        );
+        
+        // Add nonce data for search
+        wp_add_inline_script('gn-header-script', 'window.gn_ajax = ' . wp_json_encode(array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('gn_ajax_nonce'),
+        )), 'before');
+    }
+    
     // Localize script for AJAX
     wp_localize_script('gn-script', 'gn_ajax', array(
         'ajax_url' => admin_url('admin-ajax.php'),
@@ -94,3 +111,4 @@ function gn_preload_fonts() {
  * Include required files
  */
 require_once GN_THEME_PATH . '/inc/setup.php';
+require_once GN_THEME_PATH . '/inc/search.php';

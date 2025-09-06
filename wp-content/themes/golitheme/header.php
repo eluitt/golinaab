@@ -46,6 +46,30 @@
                     ?>
                 </div>
                 
+                <!-- Predictive Search -->
+                <div class="gn-search-container">
+                    <form class="gn-search-form" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
+                        <div class="gn-search-input-wrapper">
+                            <input 
+                                type="search" 
+                                class="gn-search-input" 
+                                placeholder="<?php _e('جستجو در محصولات و دوره‌ها...', 'golitheme'); ?>"
+                                value="<?php echo get_search_query(); ?>" 
+                                name="s"
+                                autocomplete="off"
+                                aria-label="<?php _e('Search', 'golitheme'); ?>"
+                            />
+                            <button type="submit" class="gn-search-submit" aria-label="<?php _e('Search', 'golitheme'); ?>">
+                                <svg class="gn-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.35-4.35"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="gn-search-results" id="gn-search-results" role="listbox" aria-live="polite" aria-label="<?php _e('Search results', 'golitheme'); ?>"></div>
+                    </form>
+                </div>
+
                 <nav id="gn-site-navigation" class="gn-main-navigation">
                     <button class="gn-menu-toggle" aria-controls="gn-primary-menu" aria-expanded="false">
                         <span class="gn-menu-toggle-text"><?php _e('Menu', 'golitheme'); ?></span>
