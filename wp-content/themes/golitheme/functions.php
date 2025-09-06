@@ -105,6 +105,21 @@ function gn_enqueue_assets() {
             GN_THEME_VERSION,
             true
         );
+        // Embla vendor and sliders (home only)
+        wp_enqueue_script(
+            'embla-carousel',
+            GN_THEME_URL . '/assets/scripts/vendor/embla-carousel.min.js',
+            array(),
+            '7.1.0',
+            true
+        );
+        wp_enqueue_script(
+            'gn-sliders-script',
+            GN_THEME_URL . '/assets/scripts/sliders.js',
+            array('embla-carousel'),
+            GN_THEME_VERSION,
+            true
+        );
     }
     
     // Localize script for AJAX

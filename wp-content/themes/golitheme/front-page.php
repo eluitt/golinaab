@@ -18,11 +18,7 @@ get_header(); ?>
 
     <?php get_template_part('templates/categories'); ?>
 
-    <!-- Sliders section placeholder (Step 4 will populate) -->
-    <section class="gn-sliders-section">
-        <div class="gn-container">
-        </div>
-    </section>
+    <?php get_template_part('templates/sliders'); ?>
 </main>
 
 <?php get_footer(); ?>

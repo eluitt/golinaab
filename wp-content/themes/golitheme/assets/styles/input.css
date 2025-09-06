@@ -461,4 +461,35 @@
   .gn-modal__actions { @apply flex gap-3 justify-start; }
   .gn-modal__close { @apply absolute top-4 left-4 text-gray-500 hover:text-soft-black; }
   .gn-modal-open { @apply overflow-hidden; }
+
+  /* Sliders */
+  .gn-sliders-section { @apply py-12 md:py-16; }
+  .gn-sliders-grid { @apply grid gap-10 lg:grid-cols-2; }
+  .gn-slider-header { @apply mb-4 flex items-center justify-between; }
+
+  .gn-embla { @apply relative; }
+  .gn-embla__viewport { @apply overflow-hidden; }
+  .gn-embla__container { display: flex; gap: 1rem; }
+  .gn-embla__slide { flex: 0 0 70%; }
+  @media (min-width: 768px){ .gn-embla__slide { flex-basis: 45%; } }
+  @media (min-width: 1024px){ .gn-embla__slide { flex-basis: 33.333%; } }
+  @media (min-width: 1280px){ .gn-embla__slide { flex-basis: 25%; } }
+
+  .gn-embla__card { @apply block h-full; }
+  .gn-embla__image-wrap { @apply mb-3 overflow-hidden rounded-2xl; }
+  .gn-embla__image { width: 100%; height: 12rem; object-fit: cover; }
+  .gn-embla__title { @apply text-sm font-bold text-soft-black truncate; }
+  .gn-embla__meta { @apply text-xs text-gray-600 mt-1 block; }
+  .gn-embla__empty { @apply text-gray-500 py-8; }
+
+  .gn-embla__prev, .gn-embla__next {
+    @apply absolute top-1/2 -translate-y-1/2 bg-white/80 text-soft-black rounded-full w-9 h-9 flex items-center justify-center shadow-soft;
+  }
+  .gn-embla__prev { inset-inline-start: .5rem; }
+  .gn-embla__next { inset-inline-end: .5rem; }
+
+  .gn-embla__edges {
+    @apply pointer-events-none absolute inset-y-0 w-full;
+    background: linear-gradient(90deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 15%, rgba(255,255,255,0) 85%, rgba(255,255,255,.9) 100%);
+  }
 }
