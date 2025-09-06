@@ -88,6 +88,17 @@ function gn_enqueue_assets() {
         )), 'before');
     }
     
+    // Hero functionality script (conditional - only on home page)
+    if (is_front_page() || is_home()) {
+        wp_enqueue_script(
+            'gn-hero-script',
+            GN_THEME_URL . '/assets/scripts/hero.js',
+            array(),
+            GN_THEME_VERSION,
+            true
+        );
+    }
+    
     // Localize script for AJAX
     wp_localize_script('gn-script', 'gn_ajax', array(
         'ajax_url' => admin_url('admin-ajax.php'),

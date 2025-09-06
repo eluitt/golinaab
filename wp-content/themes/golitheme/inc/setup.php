@@ -60,6 +60,7 @@ function gn_customize_register($wp_customize) {
         'priority' => 30,
     ));
     
+    // Hero background image
     $wp_customize->add_setting('gn_hero_background', array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
@@ -70,5 +71,57 @@ function gn_customize_register($wp_customize) {
         'section'  => 'gn_hero',
         'settings' => 'gn_hero_background',
     )));
+    
+    // Hero title
+    $wp_customize->add_setting('gn_hero_title', array(
+        'default'           => 'گلی‌ناب: هنر گلسازی پارچه‌ای لوکس',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    
+    $wp_customize->add_control('gn_hero_title', array(
+        'label'    => __('Hero Title', 'golitheme'),
+        'section'  => 'gn_hero',
+        'settings' => 'gn_hero_title',
+        'type'     => 'text',
+    ));
+    
+    // Hero subtitle
+    $wp_customize->add_setting('gn_hero_subtitle', array(
+        'default'           => 'مجموعه‌ای منحصر به فرد از گل‌های پارچه‌ای دست‌ساز با کیفیت بالا و طراحی‌های خلاقانه',
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+    
+    $wp_customize->add_control('gn_hero_subtitle', array(
+        'label'    => __('Hero Subtitle', 'golitheme'),
+        'section'  => 'gn_hero',
+        'settings' => 'gn_hero_subtitle',
+        'type'     => 'textarea',
+    ));
+    
+    // Hero CTA text
+    $wp_customize->add_setting('gn_hero_cta_text', array(
+        'default'           => 'شروع سفارش',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    
+    $wp_customize->add_control('gn_hero_cta_text', array(
+        'label'    => __('CTA Button Text', 'golitheme'),
+        'section'  => 'gn_hero',
+        'settings' => 'gn_hero_cta_text',
+        'type'     => 'text',
+    ));
+    
+    // Hero CTA URL
+    $wp_customize->add_setting('gn_hero_cta_url', array(
+        'default'           => '#categories',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    
+    $wp_customize->add_control('gn_hero_cta_url', array(
+        'label'    => __('CTA Button URL', 'golitheme'),
+        'section'  => 'gn_hero',
+        'settings' => 'gn_hero_cta_url',
+        'type'     => 'url',
+    ));
 }
 add_action('customize_register', 'gn_customize_register');

@@ -334,4 +334,109 @@
       @apply order-2;
     }
   }
+  
+  /* Hero section styles */
+  .gn-hero {
+    @apply relative h-screen flex items-center justify-center overflow-hidden;
+    min-height: 100vh;
+  }
+  
+  .gn-hero-background {
+    @apply absolute inset-0 bg-cover bg-center bg-no-repeat;
+    @apply transform-gpu;
+    will-change: transform;
+  }
+  
+  .gn-hero-overlay {
+    @apply absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60;
+  }
+  
+  .gn-hero-content {
+    @apply relative z-10 text-center text-white;
+  }
+  
+  .gn-hero-text {
+    @apply max-w-4xl mx-auto px-4;
+  }
+  
+  .gn-hero-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold mb-6;
+    @apply leading-tight;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .gn-hero-subtitle {
+    @apply text-lg md:text-xl lg:text-2xl mb-8;
+    @apply leading-relaxed opacity-90;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .gn-hero-actions {
+    @apply flex justify-center;
+  }
+  
+  .gn-hero-cta {
+    @apply gn-btn-primary text-lg px-8 py-4;
+    @apply shadow-soft-lg hover:shadow-soft-lg hover:scale-105;
+    @apply transform transition-all duration-300;
+  }
+  
+  .gn-hero-scroll-indicator {
+    @apply absolute bottom-8 left-1/2 transform -translate-x-1/2;
+    @apply text-white opacity-70 hover:opacity-100 transition-opacity duration-300;
+    @apply cursor-pointer;
+  }
+  
+  .gn-scroll-arrow {
+    @apply animate-bounce;
+  }
+  
+  /* Parallax effect */
+  .gn-hero-background[data-parallax="true"] {
+    transform: translateY(0);
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .gn-hero-background {
+      transform: none !important;
+    }
+    
+    .gn-hero-cta {
+      transform: none !important;
+    }
+    
+    .gn-hero-cta:hover {
+      transform: none !important;
+    }
+    
+    .gn-scroll-arrow {
+      animation: none;
+    }
+  }
+  
+  /* Mobile hero adjustments */
+  @media (max-width: 768px) {
+    .gn-hero {
+      @apply h-screen;
+      min-height: 100vh;
+    }
+    
+    .gn-hero-title {
+      @apply text-3xl md:text-4xl;
+    }
+    
+    .gn-hero-subtitle {
+      @apply text-base md:text-lg;
+    }
+    
+    .gn-hero-cta {
+      @apply text-base px-6 py-3;
+    }
+    
+    /* Disable parallax on mobile for performance */
+    .gn-hero-background {
+      transform: none !important;
+    }
+  }
 }
