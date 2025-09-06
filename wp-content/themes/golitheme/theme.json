@@ -1,0 +1,277 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "appearanceTools": true,
+    "useRootPaddingAwareAlignments": true,
+    "layout": {
+      "contentSize": "1200px",
+      "wideSize": "1400px"
+    },
+    "color": {
+      "palette": [
+        {
+          "slug": "lavender-50",
+          "color": "#F8F4FF",
+          "name": "Lavender 50"
+        },
+        {
+          "slug": "lavender-100",
+          "color": "#F0E8FF",
+          "name": "Lavender 100"
+        },
+        {
+          "slug": "lavender-300",
+          "color": "#C8A2C8",
+          "name": "Lavender 300"
+        },
+        {
+          "slug": "lavender-400",
+          "color": "#B08FB0",
+          "name": "Lavender 400"
+        },
+        {
+          "slug": "lavender-500",
+          "color": "#9A7B9A",
+          "name": "Lavender 500"
+        },
+        {
+          "slug": "lavender-gradient-from",
+          "color": "#C8A2C8",
+          "name": "Lavender Gradient From"
+        },
+        {
+          "slug": "lavender-gradient-to",
+          "color": "#EBDDF9",
+          "name": "Lavender Gradient To"
+        },
+        {
+          "slug": "gold-400",
+          "color": "#FFD966",
+          "name": "Gold 400"
+        },
+        {
+          "slug": "gold-500",
+          "color": "#D4AF37",
+          "name": "Gold 500"
+        },
+        {
+          "slug": "gold-600",
+          "color": "#B8952D",
+          "name": "Gold 600"
+        },
+        {
+          "slug": "beige-400",
+          "color": "#F5F5DC",
+          "name": "Beige 400"
+        },
+        {
+          "slug": "soft-black",
+          "color": "#2C2C2C",
+          "name": "Soft Black"
+        },
+        {
+          "slug": "pure-white",
+          "color": "#FFFFFF",
+          "name": "Pure White"
+        }
+      ],
+      "gradients": [
+        {
+          "slug": "lavender-gradient",
+          "gradient": "linear-gradient(135deg, #C8A2C8 0%, #EBDDF9 100%)",
+          "name": "Lavender Gradient"
+        },
+        {
+          "slug": "gold-gradient",
+          "gradient": "linear-gradient(135deg, #D4AF37 0%, #F5F5DC 100%)",
+          "name": "Gold Gradient"
+        }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "slug": "fa",
+          "fontFamily": "Doran, Tahoma, Arial, sans-serif",
+          "name": "Persian (Doran)"
+        },
+        {
+          "slug": "en",
+          "fontFamily": "Crimson Pro, Georgia, serif",
+          "name": "English (Crimson Pro)"
+        }
+      ],
+      "fontSizes": [
+        {
+          "slug": "small",
+          "size": "0.875rem",
+          "name": "Small"
+        },
+        {
+          "slug": "medium",
+          "size": "1rem",
+          "name": "Medium"
+        },
+        {
+          "slug": "large",
+          "size": "1.125rem",
+          "name": "Large"
+        },
+        {
+          "slug": "x-large",
+          "size": "1.25rem",
+          "name": "Extra Large"
+        },
+        {
+          "slug": "xx-large",
+          "size": "1.5rem",
+          "name": "2X Large"
+        },
+        {
+          "slug": "xxx-large",
+          "size": "2rem",
+          "name": "3X Large"
+        }
+      ],
+      "lineHeight": {
+        "tight": "1.2",
+        "normal": "1.4",
+        "relaxed": "1.6"
+      }
+    },
+    "spacing": {
+      "spacingScale": {
+        "steps": 0
+      },
+      "spacingSizes": [
+        {
+          "slug": "20",
+          "size": "1.25rem",
+          "name": "20"
+        },
+        {
+          "slug": "30",
+          "size": "1.875rem",
+          "name": "30"
+        },
+        {
+          "slug": "40",
+          "size": "2.5rem",
+          "name": "40"
+        },
+        {
+          "slug": "50",
+          "size": "3.125rem",
+          "name": "50"
+        },
+        {
+          "slug": "60",
+          "size": "3.75rem",
+          "name": "60"
+        },
+        {
+          "slug": "70",
+          "size": "4.375rem",
+          "name": "70"
+        },
+        {
+          "slug": "80",
+          "size": "5rem",
+          "name": "80"
+        }
+      ]
+    },
+    "border": {
+      "radius": true,
+      "color": true,
+      "style": true,
+      "width": true
+    },
+    "shadow": {
+      "presets": [
+        {
+          "slug": "soft",
+          "shadow": "0 4px 20px rgba(200, 162, 200, 0.1)",
+          "name": "Soft"
+        },
+        {
+          "slug": "soft-lg",
+          "shadow": "0 8px 30px rgba(200, 162, 200, 0.15)",
+          "name": "Soft Large"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--pure-white)",
+      "text": "var(--wp--preset--color--soft-black)"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--fa)",
+      "fontSize": "var(--wp--preset--font-size--medium)",
+      "lineHeight": "var(--wp--preset--line-height--normal)"
+    },
+    "elements": {
+      "link": {
+        "color": {
+          "text": "var(--wp--preset--color--lavender-500)"
+        },
+        ":hover": {
+          "color": {
+            "text": "var(--wp--preset--color--lavender-400)"
+          }
+        }
+      },
+      "button": {
+        "border": {
+          "radius": "50px"
+        },
+        "color": {
+          "background": "var(--wp--preset--gradient--lavender-gradient)",
+          "text": "var(--wp--preset--color--pure-white)"
+        },
+        "typography": {
+          "fontWeight": "500"
+        }
+      },
+      "heading": {
+        "typography": {
+          "fontWeight": "700",
+          "lineHeight": "var(--wp--preset--line-height--tight)"
+        }
+      }
+    },
+    "blocks": {
+      "core/group": {
+        "border": {
+          "radius": "1.5rem"
+        },
+        "shadow": "var(--wp--preset--shadow--soft)"
+      },
+      "core/cover": {
+        "border": {
+          "radius": "1.5rem"
+        }
+      },
+      "core/image": {
+        "border": {
+          "radius": "1rem"
+        }
+      }
+    }
+  },
+  "templateParts": [
+    {
+      "name": "header",
+      "title": "Header",
+      "area": "header"
+    },
+    {
+      "name": "footer",
+      "title": "Footer",
+      "area": "footer"
+    }
+  ]
+}

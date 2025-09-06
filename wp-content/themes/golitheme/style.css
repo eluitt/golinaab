@@ -1,0 +1,16 @@
+/*
+Theme Name: GoliNaab
+Description: A luxurious, modern, semi-minimal WordPress theme for Persian fabric flower artistry. RTL-first design with English support.
+Version: 1.0.0
+Author: GoliNaab Team
+Text Domain: golitheme
+Domain Path: /languages
+Requires at least: 6.6
+Tested up to: 6.6
+Requires PHP: 8.2
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+*/
+
+/* Critical CSS will be inlined here via Tailwind build process */
+@import url('./assets/styles/style.css');

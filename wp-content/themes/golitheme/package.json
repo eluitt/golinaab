@@ -1,0 +1,32 @@
+{
+  "name": "golitheme",
+  "version": "1.0.0",
+  "description": "GoliNaab WordPress theme - A luxurious, modern, semi-minimal theme for Persian fabric flower artistry",
+  "main": "index.js",
+  "scripts": {
+    "build": "tailwindcss -i ./assets/styles/input.css -o ./assets/styles/style.css --postcss",
+    "watch": "tailwindcss -i ./assets/styles/input.css -o ./assets/styles/style.css --postcss --watch",
+    "build:prod": "tailwindcss -i ./assets/styles/input.css -o ./assets/styles/style.css --postcss --minify",
+    "dev": "npm run watch"
+  },
+  "keywords": [
+    "wordpress",
+    "theme",
+    "persian",
+    "rtl",
+    "tailwindcss",
+    "luxury",
+    "fabric-flowers"
+  ],
+  "author": "GoliNaab Team",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.32",
+    "autoprefixer": "^10.4.16"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

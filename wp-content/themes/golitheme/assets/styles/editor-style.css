@@ -1,0 +1,56 @@
+/**
+ * Editor Styles for GoliNaab Theme
+ * 
+ * @package GoliNaab
+ * @since 1.0.0
+ */
+
+/* Import the main theme styles for editor */
+@import url('../style.css');
+
+/* Editor-specific overrides */
+.wp-block {
+    max-width: 1200px;
+}
+
+.wp-block[data-align="wide"] {
+    max-width: 1400px;
+}
+
+.wp-block[data-align="full"] {
+    max-width: none;
+}
+
+/* Ensure RTL support in editor */
+.rtl .wp-block {
+    direction: rtl;
+}
+
+.ltr .wp-block {
+    direction: ltr;
+}
+
+/* Custom block styles */
+.wp-block-group {
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 20px rgba(200, 162, 200, 0.1);
+}
+
+.wp-block-cover {
+    border-radius: 1.5rem;
+}
+
+.wp-block-image {
+    border-radius: 1rem;
+}
+
+/* Typography in editor */
+.editor-styles-wrapper {
+    font-family: 'Doran', Tahoma, Arial, sans-serif;
+    direction: rtl;
+}
+
+.editor-styles-wrapper.en-site {
+    font-family: 'Crimson Pro', Georgia, serif;
+    direction: ltr;
+}
