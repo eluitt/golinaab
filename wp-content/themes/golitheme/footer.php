@@ -19,7 +19,16 @@
                     ));
                     ?>
                 </div>
-                
+                <div class="gn-footer-social">
+                    <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'social',
+                        'menu_class'     => 'gn-social-menu',
+                        'container'      => false,
+                        'fallback_cb'    => '__return_empty_string',
+                    ));
+                    ?>
+                </div>
                 <div class="gn-footer-info">
                     <p class="gn-copyright">
                         &copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. 

@@ -492,4 +492,23 @@
     @apply pointer-events-none absolute inset-y-0 w-full;
     background: linear-gradient(90deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 15%, rgba(255,255,255,0) 85%, rgba(255,255,255,.9) 100%);
   }
+
+  /* Footer */
+  .gn-footer { @apply relative mt-16 bg-white; }
+  .gn-footer::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: -14px;
+    height: 14px;
+    background: linear-gradient(to top, rgba(200,162,200,0.28), rgba(200,162,200,0));
+    pointer-events: none;
+  }
+  .gn-footer-content { @apply py-10 grid gap-6 md:grid-cols-3 items-start; }
+  .gn-footer-menu { @apply space-y-2; }
+  .gn-footer-menu a { @apply text-gray-700 hover:text-lavender-500 transition-colors; }
+  .gn-social-menu { @apply flex gap-4 justify-start md:justify-center; }
+  .gn-social-menu a { @apply inline-flex items-center justify-center w-10 h-10 rounded-full bg-lavender-50 text-soft-black hover:bg-lavender-100 transition; }
+  .gn-footer-info { @apply text-right md:text-left col-span-full md:col-span-1; }
+  .gn-footer-info p { @apply text-gray-600 text-sm; }
 }

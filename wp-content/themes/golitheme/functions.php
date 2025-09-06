@@ -39,6 +39,7 @@ function gn_theme_setup() {
     register_nav_menus(array(
         'primary' => __('Primary Menu', 'golitheme'),
         'footer' => __('Footer Menu', 'golitheme'),
+        'social' => __('Social Links', 'golitheme'),
     ));
     
     // Add editor styles
@@ -129,6 +130,32 @@ function gn_enqueue_assets() {
     ));
 }
 add_action('wp_enqueue_scripts', 'gn_enqueue_assets');
+
+/**
+ * Output base meta tags (OG, theme color, manifest)
+ */
+function gn_output_meta_tags() {
+    $title       = is_singular() ? single_post_title('', false) : get_bloginfo('name');
+    $description = is_singular() ? wp_strip_all_tags(get_the_excerpt(null)) : get_bloginfo('description');
+    $url         = esc_url(home_url(add_query_arg(array(), $_SERVER['REQUEST_URI'] ?? '')));
+    $image       = '';
+    if (is_singular() && has_post_thumbnail()) {
+        $image = esc_url(get_the_post_thumbnail_url(get_queried_object_id(), 'large'));
+    } elseif (function_exists('has_site_icon') && has_site_icon()) {
+        $image = esc_url(get_site_icon_url(512));
+    }
+    $theme_color = '#C8A2C8';
+    echo "\n<!-- GoliNaab base meta -->\n";
+    echo '<meta name="theme-color" content="' . esc_attr($theme_color) . '">' . "\n";
+    echo '<link rel="manifest" href="' . esc_url(GN_THEME_URL . '/assets/manifest.json') . '">' . "\n";
+    echo '<meta property="og:site_name" content="' . esc_attr(get_bloginfo('name')) . '">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
+    if (!empty($description)) echo '<meta property="og:description" content="' . esc_attr($description) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_attr($url) . '">' . "\n";
+    if (!empty($image)) echo '<meta property="og:image" content="' . esc_attr($image) . '">' . "\n";
+    echo "<!-- /GoliNaab base meta -->\n";
+}
+add_action('wp_head', 'gn_output_meta_tags', 5);
 
 /**
  * Preload critical fonts
