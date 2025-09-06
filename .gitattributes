@@ -1,0 +1,18 @@
+# تمام فایل‌ها به LF تبدیل بشن
+* text=auto
+
+# تصاویر و فایل‌های باینری
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+
+# فایل‌های PHP و CSS و JS
+*.php text
+*.css text
+*.js text
+*.html text
+*.txt text

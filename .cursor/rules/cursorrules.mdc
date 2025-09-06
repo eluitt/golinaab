@@ -1,0 +1,139 @@
+---
+alwaysApply: true
+---
+# .cursorrules — GoliNaab (v3)
+# Purpose: Generate clean, modular, RTL-first WordPress code for a premium, lightweight site.
+# Cursor MUST: (1) ask clarifying questions if ambiguous, (2) show a diff, (3) wait for human approval,
+#              (4) execute ONE step from instructions.md, (5) report results (files, decisions, risks, acceptance),
+#              (6) commit via Conventional Commits. No multi-step execution.
+
+──────────────────────────────────────────────────────────────────────────────
+SCOPE & GOALS
+- Non-headless WordPress with light AJAX (no full React; conditional Preact only if essential for gamification).
+- Brand: luxurious, modern, semi-minimal, feminine—short landing page, app-like mobile UX (touch-friendly, no jank).
+- Primary language: Persian (RTL). English at /en (LTR, courses only; no shop/laser/rental).
+
+VERSIONS & BUDGETS (Iran-optimized: self-host assets, expect slower networks)
+- PHP 8.2+ · WordPress 6.6+ · WooCommerce 9.1+
+- Tailwind CSS + PostCSS (purge enabled against PHP/templates; RTL plugin if needed).
+- Final CSS (critical + non-critical) ≤ 50 KB (tighter for mobile).
+- Critical JS ≤ 100 KB (no jQuery; modern ES modules, conditional loading; no blocked CDNs like Google).
+- Mobile 4G budgets: LCP < 2.0s · CLS ≤ 0.02 · TBT < 80 ms · FID < 100 ms.
+- Lighthouse targets (mobile): Performance ≥ 90 · A11y ≥ 95 · Best-Practices ≥ 95 · SEO ≥ 95.
+- A11y: WCAG 2.1 AA; visible focus indicators; respect `prefers-reduced-motion` and `prefers-color-scheme`.
+
+CODING STANDARDS & NAMING
+- Follow WordPress Coding Standards (WPCS) + PSR-12.
+- Functions/variables: snake_case. Classes: StudlyCaps. Files/dirs: lowercase-with-hyphens.
+- Prefix ALL custom globals with `gn_`. Namespace CSS classes with `gn-` (e.g., .gn-card).
+- Hooks-first (actions/filters); never modify core files. Modular code: no global CSS/JS leakage; use `wp_enqueue_style/script` conditionally.
+
+STRICT TYPES POLICY
+- Use `declare(strict_types=1);` ONLY in isolated `inc/` modules with controlled inputs (e.g., AJAX handlers).
+- Avoid in templates or broad hooks to prevent WP compatibility issues.
+
+SECURITY (Iran-aware: no external calls that may fail)
+- Nonces for ALL forms/AJAX; capability checks (e.g., `current_user_can('edit_posts')`).
+- Sanitize inputs (`sanitize_text_field()`, `wp_kses_post()`); escape outputs (`esc_html()`, `esc_attr()`, `esc_url()`).
+- Custom SQL: `$wpdb->prepare()`. Rate-limit public endpoints (transients, 1 req/30s).
+- Uploads (Laser cat3): Restrict to svg/pdf/dxf/cdr/ai; MIME/size checks (<5MB); no server-side execution (disable exec in php.ini).
+
+ARCHITECTURE & ASSETS
+- RTL-first: Use logical CSS (`margin-inline-start`, `padding-block`). /en → LTR + English font auto-switch.
+- `theme.json`: Define tokens (colors/typography/radii/shadows/block-styles).
+- Enqueues: Conditional (e.g., Embla only on home); split + defer/async (HTTP/2+). Self-host fonts/assets (no Google Fonts direct; use local or Iranian CDN).
+- No jQuery. ES modules for modern JS. Avoid `transition-all`; target specific props (color, opacity, transform). Durations ≤ 300ms.
+- In-view: `IntersectionObserver`; disable animations if `prefers-reduced-motion: reduce`.
+- Payments: ZarinPal webhook in `inc/payments.php`; YekPal ready for /en.
+
+DESIGN SYSTEM (BRAND: Luxurious, Soft, Feminine)
+- Colors: Primary gradient lavender matte (from #C8A2C8 to #EBDDF9; hover #B08FB0). Accent gold/beige (#D4AF37 primary, #F5F5DC secondary; hover #B8952D). Neutrals: white #FFFFFF (bg), soft black #2C2C2C (text; less usage).
+- Typography: FA “Doran” (RTL, self-host/CDN with `font-display: swap`; preconnect if safe). EN “Crimson Pro” (Google Fonts local fallback). Headings: bold, line-height 1.4; body: 1rem base.
+- Components: Rounded cards (`border-radius: 1.5rem`), buttons (`border-radius: 50%`), soft shadows (`box-shadow: 0 4px 20px rgba(200,162,200,0.1)`).
+- Motion: Gentle, lady-like; hover: +10% scale & luminance shift; parallax hero: subtle (transform: translateY(10px)); sliders: auto-play with fade edges.
+
+UI LIBRARIES (Minimal)
+- Slider/Swiper: Embla Carousel (lightweight, no deps; load only on home for "New Products" & "Popular Courses").
+- React/Preact: ONLY for unavoidable (e.g., interactive gamification in cat4: progress bars/badges); isolated bundle, lazy-load.
+- No heavy libs; prefer vanilla JS/CSS.
+
+DATA MODEL
+- Products (Woo): ACF meta e.g., `gn_collection_name` (text), `gn_materials` (repeater), `gn_limited_edition` (true/false), `gn_featured` (true/false for home slider).
+- Course (CPT): ACF e.g., `gn_difficulty_level` (select: mini/comprehensive), `gn_duration` (text), `gn_gamification_stage` (number for progress), `gn_related_product` (link to product).
+- Laser Service (CPT cat3): ACF e.g., `gn_service_type` (select: Design/Vector/Laser/Both), `gn_upload_file` (file, validated), `gn_material` (select: fabric types), `gn_dimensions_cm` (text), `gn_estimated_cost` (formula: outline * count * fabric_cost), `gn_instructions` (wysiwyg).
+- Rental Request (CPT cat1): ACF e.g., `gn_start_date`/`gn_end_date` (date), `gn_deposit_ack` (checkbox), `gn_phone` (tel), `gn_notes` (textarea). MVP form calculates deposit.
+- ACF JSON: Store in `wp-content/themes/golitheme/acf-json/` and commit to Git.
+
+WOOCOMMERCE (MINIMAL + MU-PLUGIN RESPECT)
+- Respect MU-plugins: Do NOT re-enable disabled features (Admin UI, tracking, WC Blocks). Use Query Monitor to verify.
+- Shop Context Helper (mandatory): Define `gn_is_shop_context()` in `inc/woocommerce.php` – returns true if `is_woocommerce()` || `is_shop()` || `is_product()` || `is_product_taxonomy()` || `is_cart()` || `is_checkout()` || `is_account_page()` || has Woo shortcodes/blocks (`has_shortcode('woocommerce_...')` or `has_block('woocommerce/*')`) || template has Woo regions (e.g., mini-cart).
+- Assets: In non-shop context, dequeue ALL Woo assets (e.g., `wc-add-to-cart`, cart-fragments, blocks vendors). In shop: Enqueue only needed (e.g., add-to-cart on product pages).
+- Mini-cart: If fragments disabled, use lightweight REST endpoint (`/wp-json/gn/v1/mini-cart`) + targeted re-render (no global enable).
+- Compatibility: HPOS enabled; no direct SQL on orders. Auctions: Use Woo Auctions add-on for cat1 limited editions.
+- Payments: Integrate ZarinPal via official plugin; YekPay for /en (later).
+
+PREDICTIVE SEARCH (HOME ONLY)
+- Scope: Products + Courses (≤5 each; total ≤10). Home-only.
+- Behavior: Debounce 200ms; min length 1 char; highlight matches (e.g., <mark>); weighting: featured > recency > title match > excerpt.
+- A11y: ARIA-live for results; keyboard (↑/↓/Enter/Esc); focus trap; announce "X results".
+- Security: Nonce + user IP rate-limit (transient); server-side search with escaping. Cache results 5min.
+- No React; vanilla JS with fetch.
+
+MULTILINGUAL (PATH-BASED, NO PLUGIN)
+- Detect `/en` in `request_uri` → Switch LTR, English font, show ONLY courses (hide cat1-3 via conditional queries/templates).
+- SEO: Separate meta/OG tags; add `<link rel="alternate" hreflang="fa/en">`; sitemaps: /sitemap.xml (FA) + /en/sitemap.xml (EN).
+- Switcher: Simple toggle in header (JS redirect, cookie for lang).
+
+GAMIFICATION (CAT4 COURSES, MVP)
+- Features: Progress bars (CSS/JS based on `gn_gamification_stage`), badges (ACF images unlocked via points), login point system (user meta + REST), certificates (later: dom-to-pdf).
+- UX: Interactive, unique – e.g., quizzes with badges; no heavy LMS yet.
+
+PERFORMANCE REQUIREMENTS (IRAN: Slower networks)
+- Lazy-load images/videos (native WP + WebP/AVIF via plugin or .htaccess).
+- Optimize queries (pre_get_posts, avoid N+1; transients for search/cache).
+- Headers: Cache statics 1 year (via .htaccess or plugin).
+- No errors in console; reserve space for dynamic UI (CLS control); test with Query Monitor (no slow queries >100ms).
+
+IRAN-SPECIFIC
+- Self-host fonts/assets (local /assets/fonts/); avoid blocked CDNs (e.g., fallback Google Fonts to local Crimson Pro).
+- Payments: ZarinPal (IR, webhook in mu-plugins); YekPay (INTL, /en-ready).
+- Hosting: Laragon local; deploy to Iranian host with Redis/Memcached.
+
+RECOMMENDED STRUCTURE
+- `assets/{styles,scripts,icons}` (build with npm: Tailwind/PostCSS).
+- `components/` (PHP partials for reusable UI).
+- `templates/` (page-home.php, etc.).
+- `inc/` (setup.php, cpt.php, ajax.php, woocommerce.php, payments.php).
+- `acf-json/` (field groups).
+- Minimal `functions.php`: Include inc files; no direct logic.
+- `package.json`: For build (tailwindcss, postcss, autoprefixer).
+
+GIT & EXECUTION PROCESS
+- Repos: `golitheme` (theme-only, branch develop); separate for wp-content/mu-plugins.
+- Cursor Workflow:
+  1. Reference instructions.md; select ONE step only when user says "Run Step <N>".
+  2. If ambiguous, ask questions (e.g., "Clarify icon paths?").
+  3. Plan: Detailed changes (files/sections).
+  4. Show diff → WAIT for "Approved".
+  5. Apply in wp-content/themes/golitheme (or specified).
+  6. Report: "Files changed: X,Y. Key decisions: Z. Risks: A. Acceptance: Passed/Failed (Lighthouse score, etc.)".
+  7. Commit: Atomic, Conventional Commits (e.g., `feat(hero): add soft parallax with IntersectionObserver`).
+- npm: Only `npm ci && npm run build` if assets change.
+
+ACCEPTANCE CRITERIA (PER STEP)
+- Diff approved; no console errors; no CSS/JS conflicts (Query Monitor clean).
+- Budgets met (check bundle sizes with webpack-bundle-analyzer if needed).
+- A11y/keyboard tests pass (e.g., NVDA/VoiceOver for screen readers).
+- RTL/LTR switch flawless; mobile responsive (Chrome DevTools).
+- SEO basics: Valid meta, no 404s.
+
+# --- Run-Step Protocol (Cursor Agent) ---
+When user says: “Run Step <N>” or “Step <N> را اجرا کن”:
+1. Open ./instructions.md and reference Step <N> exactly.
+2. If essential clarifying question, ask once; else proceed with 3 phases:
+   - Plan: Precise change plan (files, sections, rationale).
+   - Apply: Implement in wp-content/themes/golitheme (or mu-plugins if specified). Run `npm run build` if assets affected.
+   - Report: "Files changed: [list]. Key decisions: [bullets]. Risks: [potential issues]. Acceptance: [checklist: budgets? A11y? Query clean? Lighthouse? ]".
+3. Enforce: Performance budgets, A11y, security, RTL-first, gn_ naming.
+4. Avoid: Core WP changes, unnecessary plugins; manage ACF via acf-json/.
+5. Output exactly the standard report; commit if approved.

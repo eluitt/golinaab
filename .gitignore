@@ -1,0 +1,53 @@
+# سیستم‌ها
+.DS_Store
+Thumbs.db
+
+# لاگ‌ها و کش‌ها
+*.log
+*.cache
+*.tmp
+
+# پوشه وردپرس
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+wp-content/backups/
+wp-content/backup-db/
+wp-content/plugins
+wp-content/languages
+/wp-content/index.php
+/wp-content/themes/twenty*/
+
+# فایل‌های تنظیمات محلی
+wp-config.php
+.env
+
+# ابزارها و IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Composer / Node
+vendor/
+node_modules/
+
+# فایل‌های موقتی
+*.sql
+*.zip
+*.tar.gz
+
+# جلوگیری از پوشش فایل‌های حساس
+.sftp-config.json
+
+/wp-admin/
+/wp-includes/
+
+/license.txt
+/readme.html
+/wp-*.php
+/xmlrpc.php
+.htaccess
+index.php
+
+
