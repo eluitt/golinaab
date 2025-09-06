@@ -97,6 +97,14 @@ function gn_enqueue_assets() {
             GN_THEME_VERSION,
             true
         );
+        // Categories modal script (Step 3)
+        wp_enqueue_script(
+            'gn-categories-script',
+            GN_THEME_URL . '/assets/scripts/categories.js',
+            array(),
+            GN_THEME_VERSION,
+            true
+        );
     }
     
     // Localize script for AJAX

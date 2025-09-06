@@ -16,13 +16,7 @@ get_header(); ?>
     get_template_part('templates/hero');
     ?>
 
-    <!-- Categories section placeholder (Step 3 will populate) -->
-    <section id="categories" class="gn-categories-section">
-        <div class="gn-container">
-            <h2 class="gn-section-title">دسته‌بندی‌ها</h2>
-            <p class="gn-section-subtitle">انتخاب کنید که چه چیزی می‌خواهید</p>
-        </div>
-    </section>
+    <?php get_template_part('templates/categories'); ?>
 
     <!-- Sliders section placeholder (Step 4 will populate) -->
     <section class="gn-sliders-section">
