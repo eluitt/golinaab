@@ -27,57 +27,9 @@
         return window.innerWidth <= 768;
     }
 
-    // Soft parallax implementation
+    // Soft parallax implementation (disabled for ultra-smooth scrolling)
     function initParallax() {
-        const heroBackground = document.querySelector('.gn-hero-background[data-parallax="true"]');
-        
-        if (!heroBackground || prefersReducedMotion() || isMobile()) {
-            return; // Skip parallax on mobile or if user prefers reduced motion
-        }
-
-        let ticking = false;
-        let lastScrollY = 0;
-
-        function updateParallax() {
-            const scrollY = window.pageYOffset;
-            const heroHeight = heroBackground.offsetHeight;
-            const windowHeight = window.innerHeight;
-            
-            // Only apply parallax when hero is in viewport
-            if (scrollY < heroHeight) {
-                // Calculate parallax offset (subtle movement)
-                const parallaxOffset = scrollY * 0.3; // 30% of scroll speed
-                
-                // Apply transform with GPU acceleration
-                heroBackground.style.transform = `translateY(${parallaxOffset}px)`;
-            }
-            
-            ticking = false;
-        }
-
-        function requestTick() {
-            if (!ticking) {
-                requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        }
-
-        // Throttled scroll handler
-        function handleScroll() {
-            const currentScrollY = window.pageYOffset;
-            
-            // Only update if scroll direction changed or significant movement
-            if (Math.abs(currentScrollY - lastScrollY) > 5) {
-                requestTick();
-                lastScrollY = currentScrollY;
-            }
-        }
-
-        // Use passive event listener for better performance
-        window.addEventListener('scroll', handleScroll, { passive: true });
-
-        // Initial call
-        updateParallax();
+        return;
     }
 
     // Scroll indicator functionality

@@ -19,7 +19,7 @@
                     ));
                     ?>
                 </div>
-                <div class="gn-footer-social">
+                <div class="gn-footer-social" role="navigation" aria-label="<?php esc_attr_e('شبکه‌های اجتماعی', 'golitheme'); ?>">
                     <?php
                     wp_nav_menu(array(
                         'theme_location' => 'social',
@@ -28,6 +28,12 @@
                         'fallback_cb'    => '__return_empty_string',
                     ));
                     ?>
+                </div>
+                <div class="gn-footer-brand">
+                    <a class="gn-footer-logo" href="<?php echo esc_url(home_url('/')); ?>">
+                        <?php bloginfo('name'); ?>
+                    </a>
+                    <p class="gn-footer-tagline"><?php bloginfo('description'); ?></p>
                 </div>
                 <div class="gn-footer-info">
                     <p class="gn-copyright">

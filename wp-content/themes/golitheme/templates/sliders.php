@@ -69,7 +69,7 @@ function gn_render_card($post_id, $context = 'product') {
                 <div class="gn-slider-header">
                     <h2 class="gn-section-title">محصولات جدید</h2>
                 </div>
-                <div class="gn-embla" data-embla='{"loop":false,"speed":10,"align":"start"}'>
+                <div class="gn-embla" data-embla='{"loop":false,"speed":8,"align":"start"}'>
                     <div class="gn-embla__viewport">
                         <div class="gn-embla__container">
                             <?php if ($products->have_posts()) : while ($products->have_posts()) : $products->the_post(); ?>
@@ -90,7 +90,7 @@ function gn_render_card($post_id, $context = 'product') {
                 <div class="gn-slider-header">
                     <h2 class="gn-section-title">دوره‌های محبوب</h2>
                 </div>
-                <div class="gn-embla" data-embla='{"loop":false,"speed":10,"align":"start"}'>
+                <div class="gn-embla" data-embla='{"loop":false,"speed":8,"align":"start"}'>
                     <div class="gn-embla__viewport">
                         <div class="gn-embla__container">
                             <?php if ($courses->have_posts()) : while ($courses->have_posts()) : $courses->the_post(); ?>

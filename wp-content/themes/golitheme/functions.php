@@ -68,7 +68,7 @@ function gn_enqueue_assets() {
         'gn-script',
         GN_THEME_URL . '/assets/scripts/main.js',
         array(),
-        GN_THEME_VERSION,
+        file_exists(GN_THEME_PATH . '/assets/scripts/main.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/main.js') : GN_THEME_VERSION,
         true
     );
     
@@ -78,7 +78,7 @@ function gn_enqueue_assets() {
             'gn-header-script',
             GN_THEME_URL . '/assets/scripts/header.js',
             array(),
-            GN_THEME_VERSION,
+            file_exists(GN_THEME_PATH . '/assets/scripts/header.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/header.js') : GN_THEME_VERSION,
             true
         );
         
@@ -95,7 +95,7 @@ function gn_enqueue_assets() {
             'gn-hero-script',
             GN_THEME_URL . '/assets/scripts/hero.js',
             array(),
-            GN_THEME_VERSION,
+            file_exists(GN_THEME_PATH . '/assets/scripts/hero.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/hero.js') : GN_THEME_VERSION,
             true
         );
         // Categories modal script (Step 3)
@@ -103,7 +103,7 @@ function gn_enqueue_assets() {
             'gn-categories-script',
             GN_THEME_URL . '/assets/scripts/categories.js',
             array(),
-            GN_THEME_VERSION,
+            file_exists(GN_THEME_PATH . '/assets/scripts/categories.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/categories.js') : GN_THEME_VERSION,
             true
         );
         // Embla vendor and sliders (home only)
@@ -118,7 +118,7 @@ function gn_enqueue_assets() {
             'gn-sliders-script',
             GN_THEME_URL . '/assets/scripts/sliders.js',
             array('embla-carousel'),
-            GN_THEME_VERSION,
+            file_exists(GN_THEME_PATH . '/assets/scripts/sliders.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/sliders.js') : GN_THEME_VERSION,
             true
         );
     }
