@@ -8,6 +8,17 @@
 (function() {
     'use strict';
 
+    // Shared scroll controller (single source of truth)
+    const SCROLLER = document.scrollingElement || document.documentElement;
+    let scrollTargetY = SCROLLER ? SCROLLER.scrollTop : 0;
+    let scrollAnimFrame = null;
+    function stopScrollAnimation() {
+        if (scrollAnimFrame != null) {
+            cancelAnimationFrame(scrollAnimFrame);
+            scrollAnimFrame = null;
+        }
+    }
+
     // DOM ready utility
     function domReady(fn) {
         if (document.readyState === 'loading') {
@@ -47,17 +58,22 @@
         const easeOutQuint = t => 1 - Math.pow(1 - t, 5);
 
         function smoothScrollTo(targetY, durationMs) {
-            const startY = window.pageYOffset;
+            stopScrollAnimation();
+            const startY = SCROLLER.scrollTop;
             const delta = targetY - startY;
             const startTime = performance.now();
             function step(now) {
                 const elapsed = now - startTime;
                 const t = Math.min(1, elapsed / durationMs);
                 const eased = easeOutQuint(t);
-                window.scrollTo(0, Math.round(startY + delta * eased));
-                if (t < 1) requestAnimationFrame(step);
+                SCROLLER.scrollTop = Math.round(startY + delta * eased);
+                if (t < 1) {
+                    scrollAnimFrame = requestAnimationFrame(step);
+                } else {
+                    scrollAnimFrame = null;
+                }
             }
-            requestAnimationFrame(step);
+            scrollAnimFrame = requestAnimationFrame(step);
         }
 
         document.addEventListener('click', function(e) {
@@ -77,8 +93,9 @@
             e.preventDefault();
             const rect = target.getBoundingClientRect();
             const headerOffset = getHeaderOffset();
-            const targetY = rect.top + window.pageYOffset - headerOffset - 8;
-            smoothScrollTo(targetY, 750);
+            const desired = rect.top + SCROLLER.scrollTop - headerOffset - 8;
+            scrollTargetY = desired;
+            smoothScrollTo(desired, 750);
             if (history.pushState) history.pushState(null, '', hash);
         }, { passive: false });
     }
@@ -103,20 +120,15 @@
 
     // Smooth wheel scrolling (rAF-based, respects inner scrollables)
     function initSmoothWheelScroll() {
-        // Force enable even if OS has reduced motion (requested by design)
-        const scroller = document.scrollingElement || document.documentElement;
-        let targetY = scroller.scrollTop;
-        let animFrame = null;
-
-        const maxScrollY = () => Math.max(0, scroller.scrollHeight - window.innerHeight);
+        const maxScrollY = () => Math.max(0, SCROLLER.scrollHeight - window.innerHeight);
 
         function animate() {
-            const current = scroller.scrollTop;
-            const distance = targetY - current;
+            const current = SCROLLER.scrollTop;
+            const distance = scrollTargetY - current;
             const step = distance * 0.12; // softer smoothing factor
-            if (Math.abs(distance) < 0.5) { animFrame = null; return; }
-            scroller.scrollTop = current + step;
-            animFrame = requestAnimationFrame(animate);
+            if (Math.abs(distance) < 0.5) { scrollAnimFrame = null; return; }
+            SCROLLER.scrollTop = current + step;
+            scrollAnimFrame = requestAnimationFrame(animate);
         }
 
         function normalizeDelta(e) {
@@ -143,25 +155,36 @@
         function onWheel(e) {
             if (e.defaultPrevented) return;
             if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
-            const activeTag = (document.activeElement && document.activeElement.tagName) || '';
-            if (/INPUT|TEXTAREA|SELECT/.test(activeTag)) return;
             const deltaY = normalizeDelta(e);
+            // If event target or active element can scroll, let native behavior handle it
             if (canScrollElement(e.target, deltaY)) return;
+            const ae = document.activeElement;
+            if (ae) {
+                const tag = ae.tagName || '';
+                const type = (ae.type || '').toString();
+                // Allow native wheel on inputs that use wheel to change value
+                if (/SELECT/i.test(tag) || (/INPUT/i.test(tag) && /(number|range|date|time|month|week)/i.test(type))) return;
+                if (canScrollElement(ae, deltaY)) return;
+            }
 
             e.preventDefault();
-            targetY = Math.max(0, Math.min(targetY + deltaY, maxScrollY()));
-            if (animFrame == null) animFrame = requestAnimationFrame(animate);
+            scrollTargetY = Math.max(0, Math.min(scrollTargetY + deltaY, maxScrollY()));
+            if (scrollAnimFrame == null) scrollAnimFrame = requestAnimationFrame(animate);
         }
 
         window.addEventListener('wheel', onWheel, { passive: false });
         document.addEventListener('wheel', onWheel, { passive: false });
 
         window.addEventListener('resize', function() {
-            targetY = Math.max(0, Math.min(targetY, maxScrollY()));
+            scrollTargetY = Math.max(0, Math.min(scrollTargetY, maxScrollY()));
         });
         window.addEventListener('scroll', function() {
-            if (animFrame == null) targetY = scroller.scrollTop;
+            if (scrollAnimFrame == null) scrollTargetY = SCROLLER.scrollTop;
         }, { passive: true });
+
+        // Cancel animation when user drags scrollbar or touches
+        window.addEventListener('pointerdown', function() { stopScrollAnimation(); }, { passive: true });
+        window.addEventListener('pointerup', function() { scrollTargetY = SCROLLER.scrollTop; }, { passive: true });
     }
 
     // Initialize everything when DOM is ready
