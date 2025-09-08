@@ -276,10 +276,102 @@
         });
     }
 
+    // Reveal header on scroll up, hide on scroll down
+    function initHeaderReveal() {
+        const header = document.querySelector('.gn-header-overlay');
+        const leftWrap = document.querySelector('.gn-left-wrap');
+        const leftMini = document.getElementById('gn-left-mini');
+        if (!header) return;
+        // If sidebar exists, append it to body so it overlays all content and keeps background solid
+        if (leftMini && leftMini.parentElement !== document.body) {
+            document.body.appendChild(leftMini);
+        }
+        // Click-to-open/close behavior with outside click + Escape
+        if (leftWrap && leftMini) {
+            const toggleBtn = leftWrap.querySelector('.gn-left-toggle');
+            let isOpen = false;
+            const openPanel = () => {
+                if (isOpen) return;
+                isOpen = true;
+                leftMini.removeAttribute('hidden');
+                leftMini.setAttribute('aria-hidden','false');
+                toggleBtn && toggleBtn.setAttribute('aria-expanded','true');
+                void leftMini.offsetWidth; // reflow for transition
+                leftMini.classList.add('gn-left-mini--open');
+            };
+            const closePanelAnimated = () => {
+                if (!isOpen) return;
+                isOpen = false;
+                leftMini.classList.remove('gn-left-mini--open');
+                const onEnd = () => {
+                    leftMini.setAttribute('aria-hidden','true');
+                    leftMini.setAttribute('hidden','hidden');
+                    toggleBtn && toggleBtn.setAttribute('aria-expanded','false');
+                    leftMini.removeEventListener('transitionend', onEnd);
+                };
+                leftMini.addEventListener('transitionend', onEnd, { once: true });
+                setTimeout(onEnd, 350);
+            };
+            // Toggle on button click
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (isOpen) closePanelAnimated(); else openPanel();
+                });
+            }
+            // Close on outside click
+            document.addEventListener('click', (e) => {
+                if (!isOpen) return;
+                if (leftMini.contains(e.target) || (toggleBtn && toggleBtn.contains(e.target))) return;
+                closePanelAnimated();
+            });
+            // Close on Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closePanelAnimated();
+            });
+            // expose for scroll handler
+            leftMini.__gnCloseAnimated = closePanelAnimated;
+        }
+        let lastY = window.pageYOffset || 0;
+        let hidden = false;
+        let ticking = false;
+        const TOL = 3; // pixels tolerance
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function() {
+                const y = window.pageYOffset || 0;
+                const delta = y - lastY;
+                // Solid background after threshold
+                if (y > 100) header.classList.add('gn-header--scrolled');
+                else header.classList.remove('gn-header--scrolled');
+                // Hide only when scrolling down beyond tolerance; keep state when idle
+                if (delta > TOL && y > 100) {
+                    if (!hidden) { header.classList.add('gn-header--hidden'); hidden = true; }
+                } else if (delta < -TOL) {
+                    if (hidden) { header.classList.remove('gn-header--hidden'); hidden = false; }
+                }
+                // Close left mini on any scroll (animated)
+                if (leftMini) {
+                    if (typeof leftMini.__gnCloseAnimated === 'function') {
+                        leftMini.__gnCloseAnimated();
+                    } else {
+                        leftMini.classList.remove('gn-left-mini--open');
+                    }
+                }
+                lastY = y;
+                ticking = false;
+            });
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+    }
+
     // Initialize everything when DOM is ready
     domReady(function() {
         initMobileMenu();
         initPredictiveSearch();
+        initHeaderReveal();
     });
 
 })();
