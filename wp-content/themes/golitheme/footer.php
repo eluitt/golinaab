@@ -18,17 +18,16 @@
                         'fallback_cb'    => 'wp_page_menu',
                     ));
                     ?>
-                </div>
-                <div class="gn-footer-social" role="navigation" aria-label="<?php esc_attr_e('شبکه‌های اجتماعی', 'golitheme'); ?>">
-                    <?php
-                    wp_nav_menu(array(
-                        'theme_location' => 'social',
-                        'menu_class'     => 'gn-social-menu',
-                        'container'      => false,
-                        'fallback_cb'    => '__return_empty_string',
-                    ));
-                    ?>
-                    <ul class="gn-social-menu">
+                    <div class="gn-footer-social" role="navigation" aria-label="<?php esc_attr_e('شبکه‌های اجتماعی', 'golitheme'); ?>">
+                        <?php
+                        wp_nav_menu(array(
+                            'theme_location' => 'social',
+                            'menu_class'     => 'gn-social-menu',
+                            'container'      => false,
+                            'fallback_cb'    => '__return_empty_string',
+                        ));
+                        ?>
+                        <ul class="gn-social-menu">
                         <li>
                             <a class="gn-social-link gn-social-telegram" href="#" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('تلگرام', 'golitheme'); ?>">
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -45,19 +44,14 @@
                                 </svg>
                             </a>
                         </li>
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
                 <div class="gn-footer-brand">
                     <a class="gn-footer-logo" href="<?php echo esc_url(home_url('/')); ?>">
                         <?php bloginfo('name'); ?>
                     </a>
                     <p class="gn-footer-tagline"><?php bloginfo('description'); ?></p>
-                </div>
-                <div class="gn-footer-info">
-                    <p class="gn-copyright">
-                        &copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. 
-                        <?php _e('All rights reserved.', 'golitheme'); ?>
-                    </p>
                 </div>
                 <div class="gn-footer-legal text-center" role="contentinfo" aria-label="<?php esc_attr_e('اطلاعات حقوقی', 'golitheme'); ?>">
                     <p class="gn-legal-text">
