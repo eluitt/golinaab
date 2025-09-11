@@ -33,8 +33,7 @@ if (!function_exists('gn_resolve_category_icon')) {
 
 <section id="categories" class="gn-categories-section">
     <div class="gn-container">
-        <h2 class="gn-section-title">دسته‌بندی‌ها</h2>
-        <p class="gn-section-subtitle">انتخاب کنید که چه چیزی می‌خواهید</p>
+        
 
         <div class="gn-categories-grid">
             <?php if (!function_exists('gn_is_en_site') || !gn_is_en_site()) : ?>
