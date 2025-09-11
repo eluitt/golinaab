@@ -226,3 +226,20 @@ function gn_preload_fonts() {
 require_once GN_THEME_PATH . '/inc/setup.php';
 require_once GN_THEME_PATH . '/inc/search.php';
 require_once GN_THEME_PATH . '/inc/cpt.php';
+require_once GN_THEME_PATH . '/inc/ajax.php';
+
+// Enqueue rental form script only on the Rental Request template
+add_action('wp_enqueue_scripts', function(){
+    if (is_page_template('templates/page-rental.php')) {
+        wp_enqueue_script(
+            'gn-rental',
+            GN_THEME_URL . '/assets/scripts/rental.js',
+            array(),
+            file_exists(GN_THEME_PATH . '/assets/scripts/rental.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/rental.js') : GN_THEME_VERSION,
+            true
+        );
+        wp_localize_script('gn-rental','gn_ajax', array(
+            'ajax_url' => admin_url('admin-ajax.php')
+        ));
+    }
+});
