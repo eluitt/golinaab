@@ -133,6 +133,21 @@ function gn_enqueue_assets() {
 add_action('wp_enqueue_scripts', 'gn_enqueue_assets');
 
 /**
+ * Add defer to non-critical JS (front-end only)
+ */
+add_filter('script_loader_tag', function($tag, $handle, $src){
+    if (is_admin()) return $tag;
+    $defer_for = array(
+        'gn-script', 'gn-header-script', 'gn-hero-script', 'gn-hero-particles', 'gn-categories-script', 'gn-sliders-script', 'gn-rental'
+    );
+    if (in_array($handle, $defer_for, true)) {
+        // Keep before inline scripts if any are printed 'before'
+        $tag = str_replace('<script ', '<script defer ', $tag);
+    }
+    return $tag;
+}, 10, 3);
+
+/**
  * Output base meta tags (OG, theme color, manifest)
  */
 function gn_output_meta_tags() {
@@ -157,6 +172,15 @@ function gn_output_meta_tags() {
     echo "<!-- /GoliNaab base meta -->\n";
 }
 add_action('wp_head', 'gn_output_meta_tags', 5);
+
+// Preload hero background image to improve LCP on home
+add_action('wp_head', function(){
+    if (is_front_page() || is_home()) {
+        $bg = get_theme_mod('gn_hero_background', '');
+        if (empty($bg)) { $bg = GN_THEME_URL . '/assets/images/flower.png'; }
+        echo '<link rel="preload" as="image" href="'.esc_url($bg).'" imagesrcset="'.esc_url($bg).'">' . "\n";
+    }
+}, 7);
 
 /**
  * Detect EN site by /en path prefix

@@ -25,7 +25,13 @@
         <div class="gn-container">
             <div class="gn-header-bar" role="navigation">
                 <div class="gn-header-brand">
-                    <?php if (has_custom_logo()) { the_custom_logo(); } else { ?>
+                    <?php if (has_custom_logo()) { 
+                        // Filter custom logo output to add decoding="async"
+                        add_filter('get_custom_logo', function($html){
+                            return preg_replace('/<img(\s+)/', '<img decoding="async"$1', $html, 1);
+                        });
+                        the_custom_logo(); 
+                      } else { ?>
                         <a class="gn-header-logo" href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a>
                         <span class="gn-header-tagline"><?php bloginfo('description'); ?></span>
                     <?php } ?>
