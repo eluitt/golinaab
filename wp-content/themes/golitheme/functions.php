@@ -114,18 +114,11 @@ function gn_enqueue_assets() {
             file_exists(GN_THEME_PATH . '/assets/scripts/categories.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/categories.js') : GN_THEME_VERSION,
             true
         );
-        // Embla vendor and sliders (home only)
-        wp_enqueue_script(
-            'embla-carousel',
-            GN_THEME_URL . '/assets/scripts/vendor/embla-carousel.min.js',
-            array(),
-            '7.1.0',
-            true
-        );
+        // Sliders (home only)
         wp_enqueue_script(
             'gn-sliders-script',
             GN_THEME_URL . '/assets/scripts/sliders.js',
-            array('embla-carousel'),
+            array(),
             file_exists(GN_THEME_PATH . '/assets/scripts/sliders.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/sliders.js') : GN_THEME_VERSION,
             true
         );

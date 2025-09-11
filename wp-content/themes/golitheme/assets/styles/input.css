@@ -298,15 +298,15 @@
     @apply mb-1;
   }
   
-  .gn-menu-open .gn-menu-toggle-icon span:nth-child(1) {
+  .gn-menu-toggle-icon span:nth-child(1) {
     @apply transform rotate-45 translate-y-1.5;
   }
   
-  .gn-menu-open .gn-menu-toggle-icon span:nth-child(2) {
+  .gn-menu-toggle-icon span:nth-child(2) {
     @apply opacity-0;
   }
   
-  .gn-menu-open .gn-menu-toggle-icon span:nth-child(3) {
+  .gn-menu-toggle-icon span:nth-child(3) {
     @apply transform -rotate-45 -translate-y-1.5;
   }
   
@@ -543,31 +543,89 @@
   .gn-sliders-grid { @apply grid gap-10 lg:grid-cols-2; }
   .gn-slider-header { @apply mb-4 flex items-center justify-between; }
 
-  .gn-embla { @apply relative; }
-  .gn-embla__viewport { @apply overflow-hidden; }
-  .gn-embla__container { display: flex; gap: 1rem; }
+  .gn-embla { @apply relative; opacity: 0; transition: opacity .3s ease; --gn-edge-width: 6rem; outline: none; }
+  .gn-embla.is-initialized { opacity: 1; }
+  .gn-embla::before,
+  .gn-embla::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 6rem;
+    pointer-events: none;
+    z-index: 4;
+    filter: blur(12px);
+    opacity: 1;
+    transition: opacity .25s ease;
+  }
+  .gn-embla::before { left: 0; width: var(--gn-edge-width); background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
+  .gn-embla::after  { right: 0; width: var(--gn-edge-width); background: linear-gradient(to left,  rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
+  /* When at end, fully hide right edge so آخرین کارت کامل دیده شود */
+  .gn-embla.is-at-end::after { opacity: 0; width: 0; }
+  .gn-embla.is-at-start::before { opacity: 0; }
+  .gn-embla.is-at-end::after { opacity: 0; }
+  .gn-embla__viewport { overflow-x: auto; overflow-y: hidden; direction: ltr; cursor: grab; touch-action: pan-y; will-change: scroll-position; -webkit-overflow-scrolling: touch; outline: none; }
+  .gn-embla:focus, .gn-embla__viewport:focus { outline: none !important; }
+  .gn-embla__viewport::-webkit-scrollbar { display: none; }
+  .gn-embla__viewport { -ms-overflow-style: none; scrollbar-width: none; }
+  .gn-embla__container { display: flex; gap: 1rem; direction: ltr; will-change: transform; padding-inline-start: var(--gn-edge-width); padding-inline-end: var(--gn-edge-width); box-sizing: border-box; }
+  .gn-embla__viewport.is-grabbing { cursor: grabbing; user-select: none; }
+  .gn-embla__viewport.is-dragging { scroll-snap-type: none !important; }
   .gn-embla__slide { flex: 0 0 70%; }
   @media (min-width: 768px){ .gn-embla__slide { flex-basis: 45%; } }
   @media (min-width: 1024px){ .gn-embla__slide { flex-basis: 33.333%; } }
   @media (min-width: 1280px){ .gn-embla__slide { flex-basis: 25%; } }
 
-  .gn-embla__card { @apply block h-full; }
+  .gn-embla__card { @apply block h-full; -webkit-user-drag: none; }
   .gn-embla__image-wrap { @apply mb-3 overflow-hidden rounded-2xl; backface-visibility: hidden; transform: translateZ(0); }
-  .gn-embla__image { width: 100%; height: 12rem; object-fit: cover; backface-visibility: hidden; transform: translateZ(0); }
+  .gn-embla__image { width: 100% !important; aspect-ratio: 4 / 3 !important; height: auto !important; object-fit: cover !important; backface-visibility: hidden; transform: translateZ(0); border-radius: 0.75rem; display: block !important; max-height: none !important; min-height: auto !important; }
+  /* Force uniform sizing on all slides */
+  .gn-embla__slide .gn-embla__image,
+  .gn-embla__slide:first-child .gn-embla__image,
+  .gn-embla__slide:last-child .gn-embla__image,
+  .gn-embla__slide:nth-child(n) .gn-embla__image { 
+    width: 100% !important; 
+    aspect-ratio: 4 / 3 !important; 
+    height: auto !important; 
+    object-fit: cover !important; 
+    display: block !important;
+    max-height: none !important;
+    min-height: auto !important;
+  }
+  .gn-embla__image { -webkit-user-drag: none; user-select: none; }
+  .gn-embla__card { user-select: none; direction: rtl; }
   .gn-embla__title { @apply text-sm font-bold text-soft-black truncate; }
   .gn-embla__meta { @apply text-xs text-gray-600 mt-1 block; }
   .gn-embla__empty { @apply text-gray-500 py-8; }
 
   .gn-embla__prev, .gn-embla__next {
     @apply absolute top-1/2 -translate-y-1/2 bg-white/80 text-soft-black rounded-full w-9 h-9 flex items-center justify-center shadow-soft;
+    cursor: pointer;
+    z-index: 2;
   }
-  .gn-embla__prev { inset-inline-start: .5rem; }
-  .gn-embla__next { inset-inline-end: .5rem; }
+  /* Disabled style similar to Barime: remove purple stroke/hint and gray out */
+  .gn-embla__prev[aria-disabled="true"],
+  .gn-embla__next[aria-disabled="true"],
+  .gn-embla__prev:disabled,
+  .gn-embla__next:disabled {
+    opacity: .35;
+    cursor: default;
+    box-shadow: none;
+    background-color: rgba(255,255,255,0.6);
+    border: none;
+  }
+  /* Place arrows using physical sides to avoid RTL/LTR inversion */
+  .gn-embla__prev { right: .5rem; left: auto; }
+  .gn-embla__next { left: .5rem; right: auto; }
+  /* Ensure arrows sit above edges overlay */
+  .gn-embla__prev, .gn-embla__next { position: absolute; z-index: 5; }
 
   .gn-embla__edges {
     @apply pointer-events-none absolute inset-y-0 w-full;
     background: linear-gradient(90deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 15%, rgba(255,255,255,0) 85%, rgba(255,255,255,.9) 100%);
   }
+  /* Re-enable internal edges; not the cause of issue */
+  .gn-embla.is-at-end .gn-embla__edges,
+  .gn-embla.is-at-start .gn-embla__edges { display: block; }
 
   /* Footer */
   .gn-footer { @apply relative mt-16; }
@@ -636,3 +694,4 @@
   .gn-footer-logo { @apply inline-block font-bold text-soft-black; }
   .gn-footer-tagline { @apply text-gray-700 text-sm mt-1; }
 }
+  
