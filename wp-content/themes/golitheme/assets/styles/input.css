@@ -258,10 +258,15 @@
   .gn-left-wrap { order: 1; }
   .gn-account { order: 2; }
   .gn-cart { order: 3; }
+  .gn-lang-toggle { order: 4; color:#D4AF37; font-weight:400; letter-spacing:0; }
+  .gn-lang-toggle svg { color:#D4AF37; stroke:#D4AF37; }
   .gn-header-icon { display:inline-flex; width:40px; height:40px; align-items:center; justify-content:center; border-radius:9999px;
     background: radial-gradient(120% 120% at 50% 0%, rgba(200,162,200,.18), rgba(200,162,200,0) 60%), linear-gradient(180deg, #fff, #fafafa);
     color:#2C2C2C; box-shadow:0 6px 20px rgba(200,162,200,.12); transition: transform .22s cubic-bezier(.22,.61,.36,1), box-shadow .22s; }
-  .gn-header-icon:hover{ transform: translateY(-1px); box-shadow:0 12px 22px rgba(200,162,200,.2);}
+  .gn-header-icon:hover{ transform: translateY(-1px); box-shadow:0 12px 22px rgba(200,162,200,.2);} 
+  /* Force language toggle to use gold color (override generic icon color) */
+  .gn-header-icon.gn-lang-toggle { color: #D4AF37 !important; }
+  .gn-header-icon.gn-lang-toggle svg { stroke: #D4AF37 !important; color: #D4AF37 !important; }
   /* Mini left sidebar (pure CSS hover) */
   .gn-left-wrap { position: relative; }
   /* Pin to absolute left of the viewport (ignore RTL logical mapping) */

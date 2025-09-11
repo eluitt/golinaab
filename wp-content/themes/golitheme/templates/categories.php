@@ -37,6 +37,7 @@ if (!function_exists('gn_resolve_category_icon')) {
         <p class="gn-section-subtitle">انتخاب کنید که چه چیزی می‌خواهید</p>
 
         <div class="gn-categories-grid">
+            <?php if (!function_exists('gn_is_en_site') || !gn_is_en_site()) : ?>
             <!-- Cat1: Collectibles (Buy/Rent split) -->
             <button class="gn-category-card" data-gn-open="cat1-modal" aria-haspopup="dialog" aria-controls="gn-cat1-modal">
                 <span class="gn-category-icon" aria-hidden="true">
@@ -75,7 +76,7 @@ if (!function_exists('gn_resolve_category_icon')) {
                 <span class="gn-category-title">خدمات لیزر</span>
                 <span class="gn-category-desc">طراحی، وکتور و برش</span>
             </a>
-
+            <?php endif; ?>
             <!-- Cat4: Courses -->
             <a class="gn-category-card" href="<?php echo $urls['cat4']; ?>">
                 <span class="gn-category-icon" aria-hidden="true">

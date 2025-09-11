@@ -85,7 +85,8 @@ function gn_render_card($post_id, $context = 'product') {
     <div class="gn-container">
         <div class="gn-sliders-grid">
             <!-- New Products -->
-            <div class="gn-slider-group">
+            <?php if (!function_exists('gn_is_en_site') || !gn_is_en_site()) : ?>
+            <div class="gn-slider-group gn-section-products">
                 <div class="gn-slider-header">
                     <h2 class="gn-section-title">محصولات جدید</h2>
                 </div>
@@ -112,9 +113,10 @@ function gn_render_card($post_id, $context = 'product') {
                     <div class="gn-embla__edges" aria-hidden="true"></div>
                 </div>
             </div>
+            <?php endif; ?>
 
             <!-- Popular Courses -->
-            <div class="gn-slider-group">
+            <div class="gn-slider-group gn-section-courses">
                 <div class="gn-slider-header">
                     <h2 class="gn-section-title">دوره‌های محبوب</h2>
                 </div>

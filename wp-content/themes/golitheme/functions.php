@@ -159,6 +159,57 @@ function gn_output_meta_tags() {
 add_action('wp_head', 'gn_output_meta_tags', 5);
 
 /**
+ * Detect EN site by /en path prefix
+ */
+function gn_is_en_site(): bool {
+    $uri = $_SERVER['REQUEST_URI'] ?? '/';
+    if ($uri === '') { $uri = '/'; }
+    return ($uri === '/en' || $uri === '/en/' || strpos($uri, '/en/') === 0);
+}
+
+// Add body class for EN site → CSS already handles LTR + font
+add_filter('body_class', function(array $classes){
+    if (gn_is_en_site()) { $classes[] = 'en-site'; }
+    return $classes;
+});
+
+/** Output hreflang alternates for fa/en */
+function gn_output_hreflang_links() {
+    $uri = $_SERVER['REQUEST_URI'] ?? '/';
+    if ($uri === '') { $uri = '/'; }
+    if (gn_is_en_site()) {
+        $fa_path = preg_replace('#^/en/?#', '/', $uri);
+        if ($fa_path === '') { $fa_path = '/'; }
+        $en_path = $uri;
+    } else {
+        $fa_path = $uri;
+        $en_path = '/en' . ($uri[0] === '/' ? '' : '/') . $uri;
+    }
+    $fa_url = home_url($fa_path);
+    $en_url = home_url($en_path);
+    echo '<link rel="alternate" hreflang="fa" href="'.esc_url($fa_url).'">' . "\n";
+    echo '<link rel="alternate" hreflang="en" href="'.esc_url($en_url).'">' . "\n";
+}
+add_action('wp_head', 'gn_output_hreflang_links', 6);
+
+/** Language toggle (cookie + redirect) */
+function gn_lang_toggle_script() { ?>
+<script>
+(function(){
+  var btn=document.querySelector('.gn-lang-toggle'); if(!btn) return;
+  btn.addEventListener('click',function(){
+    var isEn = location.pathname === '/en' || location.pathname.indexOf('/en/')===0;
+    var target = isEn ? location.pathname.replace(/^\/en\/?/,'/') : '/en' + (location.pathname[0]==='/'?'':'/') + location.pathname;
+    target = target.replace(/\/\/+/, '/');
+    document.cookie='gn_lang='+(isEn?'fa':'en')+';path=/;max-age='+(60*60*24*365);
+    location.href = target + location.search + location.hash;
+  });
+})();
+</script>
+<?php }
+add_action('wp_footer','gn_lang_toggle_script', 20);
+
+/**
  * Preload critical fonts
  */
 function gn_preload_fonts() {

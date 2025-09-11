@@ -50,6 +50,9 @@
                 </div>
 
                 <div class="gn-header-icons">
+                    <button class="gn-header-icon gn-lang-toggle" type="button" aria-label="<?php esc_attr_e('Switch language','golitheme'); ?>">
+                        <?php echo function_exists('gn_is_en_site') && gn_is_en_site() ? 'FA' : 'EN'; ?>
+                    </button>
                     <div class="gn-left-wrap">
                         <button class="gn-header-icon gn-left-toggle" aria-label="<?php esc_attr_e('Toggle menu','golitheme'); ?>">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A7B9A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
