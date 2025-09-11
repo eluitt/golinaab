@@ -394,14 +394,24 @@
     @apply transform-gpu;
     background-position: center top;
     will-change: transform, background-position;
+    z-index: 5;
   }
   
   .gn-hero-overlay {
-    @apply absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60;
+    @apply absolute inset-0 bg-gradient-to-b from-black/5 via-black/20 to-black/30;
+    z-index: 7; /* background(5) < overlay(7) < canvas(9) < content(10) */
   }
   
   .gn-hero-content {
     @apply relative z-10 text-center text-white;
+  }
+
+  /* Canvas overlay sits between background and content */
+  .gn-hero-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9; /* background(5) < canvas(9) < content(10) */
   }
   
   .gn-hero-text {

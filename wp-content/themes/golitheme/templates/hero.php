@@ -19,7 +19,7 @@ if (empty($hero_background)) {
 }
 ?>
 
-<section class="gn-hero" id="hero">
+<section class="gn-hero" id="hero" data-particles-force="true">
     <div class="gn-hero-background" 
          style="background-image: url('<?php echo esc_url($hero_background); ?>');"
          data-parallax="true" data-parallax-force="true">

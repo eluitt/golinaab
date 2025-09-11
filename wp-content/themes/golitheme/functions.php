@@ -98,6 +98,14 @@ function gn_enqueue_assets() {
             file_exists(GN_THEME_PATH . '/assets/scripts/hero.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/hero.js') : GN_THEME_VERSION,
             true
         );
+        // Lightweight particles overlay for hero (decorative)
+        wp_enqueue_script(
+            'gn-hero-particles',
+            GN_THEME_URL . '/assets/scripts/hero-particles.js',
+            array(),
+            file_exists(GN_THEME_PATH . '/assets/scripts/hero-particles.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/hero-particles.js') : GN_THEME_VERSION,
+            true
+        );
         // Categories modal script (Step 3)
         wp_enqueue_script(
             'gn-categories-script',
