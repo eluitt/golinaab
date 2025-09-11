@@ -225,3 +225,4 @@ function gn_preload_fonts() {
  */
 require_once GN_THEME_PATH . '/inc/setup.php';
 require_once GN_THEME_PATH . '/inc/search.php';
+require_once GN_THEME_PATH . '/inc/cpt.php';
