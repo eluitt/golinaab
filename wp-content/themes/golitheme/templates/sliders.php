@@ -65,16 +65,27 @@ function gn_render_card($post_id, $context = 'product') {
     }
     ?>
     <div class="gn-embla__slide">
-        <a class="gn-card gn-embla__card" href="<?php echo esc_url($url); ?>">
+        <a class="gn-card gn-embla__card<?php echo $context === 'product' ? ' gn-embla__card--image-only' : ''; ?>" href="<?php echo esc_url($url); ?>">
             <div class="gn-embla__image-wrap">
                 <img class="gn-embla__image" src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy" decoding="async" />
+                <?php if ($context === 'product') : ?>
+                  <span class="gn-card-overlay-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="10" cy="21" r="1.8" stroke="#FFFFFF" stroke-width="1.5"/>
+                      <circle cx="18" cy="21" r="1.8" stroke="#FFFFFF" stroke-width="1.5"/>
+                      <path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h6.6a2 2 0 0 0 2-1.6L20 8H7" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                <?php endif; ?>
             </div>
+            <?php if ($context !== 'product') : ?>
             <div class="gn-embla__content">
                 <h3 class="gn-embla__title" title="<?php echo esc_attr($title); ?>"><?php echo esc_html($title); ?></h3>
                 <?php if (!empty($meta_str)) : ?>
                     <span class="gn-embla__meta"><?php echo wp_kses_post($meta_str); ?></span>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
         </a>
     </div>
     <?php
