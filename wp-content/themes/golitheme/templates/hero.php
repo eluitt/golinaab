@@ -15,7 +15,7 @@ $hero_cta_url = get_theme_mod('gn_hero_cta_url', '#categories');
 
 // Default background if none set
 if (empty($hero_background)) {
-    $hero_background = get_template_directory_uri() . '/assets/images/hero-default.jpg';
+    $hero_background = get_template_directory_uri() . '/assets/images/flower.png';
 }
 ?>
 
