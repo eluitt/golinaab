@@ -27,9 +27,57 @@
         return window.innerWidth <= 768;
     }
 
-    // Soft parallax implementation (disabled for ultra-smooth scrolling)
+    // Soft parallax implementation
     function initParallax() {
-        return;
+        const heroBg = document.querySelector('.gn-hero-background[data-parallax="true"]');
+        const heroSection = document.querySelector('.gn-hero');
+
+        if (!heroBg || !heroSection) return;
+
+        // Allow forcing parallax even when reduced motion is enabled
+        const forceParallax = heroBg.getAttribute('data-parallax-force') === 'true';
+        if (prefersReducedMotion() && !forceParallax) return;
+
+        let ticking = false;
+
+        function update() {
+            ticking = false;
+
+            const rect = heroSection.getBoundingClientRect();
+            const heroHeight = rect.height;
+            const viewportH = window.innerHeight || document.documentElement.clientHeight;
+
+            // Skip when hero is completely out of view
+            if (rect.bottom <= 0 || rect.top >= viewportH) return;
+
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const heroTop = rect.top + scrollTop;
+
+            // Progress of scroll through hero: 0 (top) → 1 (bottom)
+            const rawProgress = (scrollTop - heroTop) / Math.max(1, heroHeight);
+            const progress = Math.max(0, Math.min(1, rawProgress));
+
+            // Move background from ~top (5%) to lower (85%) as we scroll
+            const posY = 5 + progress * 80; // 5% → 85%
+            heroBg.style.backgroundPosition = 'center ' + posY + '%';
+
+            // Add subtle depth with translate; keep scale to avoid edge gaps
+            const translateY = Math.round((progress - 0.5) * 40); // ~ -20px → +20px
+            heroBg.style.transform = 'translate3d(0,' + translateY + 'px,0) scale(1.06)';
+        }
+
+        function onScroll() {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(update);
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+
+        // Initial position
+        requestAnimationFrame(update);
     }
 
     // Scroll indicator functionality
@@ -128,13 +176,10 @@
 
     // Handle window resize
     window.addEventListener('resize', function() {
-        // Reinitialize parallax if screen size changes significantly
-        if (isMobile()) {
-            const heroBackground = document.querySelector('.gn-hero-background[data-parallax="true"]');
-            if (heroBackground) {
-                heroBackground.style.transform = 'none';
-            }
-        }
+        // Trigger a recalculation on resize
+        window.requestAnimationFrame(function(){
+            window.dispatchEvent(new Event('scroll'));
+        });
     }, { passive: true });
 
 })();

@@ -378,13 +378,22 @@
   /* Hero section styles */
   .gn-hero {
     @apply relative h-screen flex items-center justify-center overflow-hidden;
-    min-height: 100vh;
+    min-height: calc(100vh + 4px);
+  }
+
+  /* Prefer dynamic viewport units when available */
+  @supports (height: 100dvh) {
+    .gn-hero { height: calc(100dvh + 4px); min-height: calc(100dvh + 4px); }
+  }
+  @supports (height: 100svh) {
+    .gn-hero { height: calc(100svh + 4px); min-height: calc(100svh + 4px); }
   }
   
   .gn-hero-background {
-    @apply absolute inset-0 bg-cover bg-center bg-no-repeat;
+    @apply absolute inset-0 bg-cover bg-no-repeat;
     @apply transform-gpu;
-    will-change: transform;
+    background-position: center top;
+    will-change: transform, background-position;
   }
   
   .gn-hero-overlay {
@@ -493,11 +502,6 @@
     
     .gn-hero-cta {
       @apply text-base px-6 py-3;
-    }
-    
-    /* Disable parallax on mobile for performance */
-    .gn-hero-background {
-      transform: none !important;
     }
   }
 
