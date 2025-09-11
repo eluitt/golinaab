@@ -9,15 +9,11 @@
     <footer id="gn-colophon" class="gn-footer">
         <div class="gn-container">
             <div class="gn-footer-content">
-                <div class="gn-footer-widgets">
-                    <?php
-                    wp_nav_menu(array(
-                        'theme_location' => 'footer',
-                        'menu_class'     => 'gn-footer-menu',
-                        'container'      => false,
-                        'fallback_cb'    => 'wp_page_menu',
-                    ));
-                    ?>
+                <div class="gn-footer-brand">
+                    <a class="gn-footer-logo" href="<?php echo esc_url(home_url('/')); ?>">
+                        <?php bloginfo('name'); ?>
+                    </a>
+                    <p class="gn-footer-tagline"><?php bloginfo('description'); ?></p>
                     <div class="gn-footer-social" role="navigation" aria-label="<?php esc_attr_e('شبکه‌های اجتماعی', 'golitheme'); ?>">
                         <?php
                         wp_nav_menu(array(
@@ -47,11 +43,15 @@
                         </ul>
                     </div>
                 </div>
-                <div class="gn-footer-brand">
-                    <a class="gn-footer-logo" href="<?php echo esc_url(home_url('/')); ?>">
-                        <?php bloginfo('name'); ?>
-                    </a>
-                    <p class="gn-footer-tagline"><?php bloginfo('description'); ?></p>
+                <div class="gn-footer-widgets">
+                    <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'footer',
+                        'menu_class'     => 'gn-footer-menu',
+                        'container'      => false,
+                        'fallback_cb'    => 'wp_page_menu',
+                    ));
+                    ?>
                 </div>
                 <div class="gn-footer-legal text-center" role="contentinfo" aria-label="<?php esc_attr_e('اطلاعات حقوقی', 'golitheme'); ?>">
                     <p class="gn-legal-text">

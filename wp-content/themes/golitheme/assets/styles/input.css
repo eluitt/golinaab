@@ -555,32 +555,31 @@
   }
 
   /* Footer */
-  .gn-footer { @apply relative mt-16; background-color: #EBDDF9; }
-  .gn-footer::before {
-    content: '';
-    position: absolute;
-    inset-inline: 0;
-    top: auto;
-    bottom: 100%;
-    height: 80px;
-    background: linear-gradient(
-      to top,
-      #EBDDF9 0%,
-      rgba(235,221,249,0.66) 55%,
-      rgba(235,221,249,0.33) 80%,
-      rgba(235,221,249,0) 100%
+  .gn-footer { @apply relative mt-16; }
+  .gn-footer {
+    /* Solid purple base + overlay gradient that fades into transparent before bottom */
+    background-color: #8E5AAE;
+    background-image: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #ffffff 38%,
+      rgba(255,255,255,0.85) 54%,
+      rgba(255,255,255,0.6) 78%,
+      rgba(255,255,255,0.25) 98%,
+      rgba(255,255,255,0) 100%
     );
-    pointer-events: none;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
-  .gn-footer-content { @apply pt-0 pb-10 grid gap-6 md:grid-cols-2 items-start; }
+  .gn-footer-content { @apply pt-0 pb-4 grid gap-6 md:grid-cols-4 items-start; }
   /* Ensure grid tracks map left→right visually; keep text RTL inside */
   .gn-footer-content { direction: ltr; }
   .gn-footer-widgets, .gn-footer-brand, .gn-footer-legal { direction: rtl; }
-  /* Left column: menu + socials (stick to visual left), Right column: brand (stick to visual right) */
-  .gn-footer-widgets { @apply md:col-start-1 md:col-span-1 order-2 md:order-1 text-left md:justify-self-start; }
-  .gn-footer-brand { @apply md:col-start-2 md:col-span-1 order-1 md:order-2 text-center md:text-right md:justify-self-end; }
-  .gn-footer-legal { @apply col-span-full mt-6 order-last; }
-  .gn-legal-text { @apply text-center text-soft-black text-sm; }
+  /* Columns (reserve two future columns): col-4 brand+socials (right), col-3 menu (left of brand) */
+  .gn-footer-brand { @apply md:col-start-4 md:col-span-1 order-1 md:order-2 text-right md:justify-self-end; }
+  .gn-footer-widgets { @apply md:col-start-3 md:col-span-1 order-2 md:order-1 text-right md:justify-self-end; }
+  .gn-footer-legal { @apply col-span-full mt-6 order-last mb-1; }
+  .gn-legal-text { @apply text-center text-black text-sm; }
   .gn-social-menu { @apply mt-4; }
   .gn-footer-menu { @apply space-y-2; }
   .gn-footer-menu a { @apply relative text-soft-black hover:text-gold-500 transition-colors; }
@@ -618,7 +617,7 @@
   .gn-footer-info { @apply text-right md:text-left col-span-full md:col-span-1; }
   .gn-footer-info p { @apply text-gray-600 text-sm; }
   /* Brand block */
-  .gn-footer-brand { @apply text-center md:text-right; }
+  .gn-footer-brand { @apply text-right md:text-right; }
   .gn-footer-logo { @apply inline-block font-bold text-soft-black; }
   .gn-footer-tagline { @apply text-gray-700 text-sm mt-1; }
 }
