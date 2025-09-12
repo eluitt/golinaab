@@ -251,6 +251,7 @@ require_once GN_THEME_PATH . '/inc/setup.php';
 require_once GN_THEME_PATH . '/inc/search.php';
 require_once GN_THEME_PATH . '/inc/cpt.php';
 require_once GN_THEME_PATH . '/inc/ajax.php';
+require_once GN_THEME_PATH . '/inc/auth.php';
 
 // Enqueue rental form script only on the Rental Request template
 add_action('wp_enqueue_scripts', function(){
@@ -265,5 +266,14 @@ add_action('wp_enqueue_scripts', function(){
         wp_localize_script('gn-rental','gn_ajax', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
+    }
+    if (is_page_template('templates/page-account.php')) {
+        wp_enqueue_script(
+            'gn-auth',
+            GN_THEME_URL . '/assets/scripts/auth.js',
+            array(),
+            file_exists(GN_THEME_PATH . '/assets/scripts/auth.js') ? filemtime(GN_THEME_PATH . '/assets/scripts/auth.js') : GN_THEME_VERSION,
+            true
+        );
     }
 });

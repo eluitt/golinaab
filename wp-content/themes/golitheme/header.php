@@ -78,7 +78,7 @@
                             </div>
                         </aside>
                     </div>
-                    <a class="gn-header-icon gn-account" href="<?php echo esc_url( function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('myaccount')) : wp_login_url() ); ?>" aria-label="<?php esc_attr_e('Account','golitheme'); ?>">
+                    <a class="gn-header-icon gn-account" href="<?php echo esc_url( home_url('/account') ); ?>" aria-label="<?php esc_attr_e('Account','golitheme'); ?>">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                           <path d="M20 21c0-4-4-6-8-6s-8 2-8 6"/>
                           <circle cx="12" cy="7" r="4"/>
